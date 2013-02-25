@@ -21,7 +21,7 @@ class redis::params {
     'ubuntu', 'debian': {
       $package = 'redis-server'
       $service = 'redis-server'
-      $conf    = '/etc/redis.conf'
+      $conf    = '/etc/redis/redis.conf'
     }
     default: {
       fail("Unsupported osfamily: ${::osfamily} operatingsystem: ${::operatingsystem}, module ${module_name} only support osfamily RedHat and Debian")
