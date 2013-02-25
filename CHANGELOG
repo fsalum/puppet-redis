@@ -1,2 +1,4 @@
+2013-02-25 - Felipe Salum <fsalum@gmail.com> - 0.0.2
+* Fixing redis.conf location for Debian
 2013-02-25 - Felipe Salum <fsalum@gmail.com> - 0.0.1
 * Initial Forge release
