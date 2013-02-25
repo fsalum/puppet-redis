@@ -14,14 +14,14 @@ Use the default parameters:
 To change the port and listening network interface:
 
     class { 'redis':
-      conf_port            => '6379',
-      conf_bind            => '0.0.0.0',
+      conf_port => '6379',
+      conf_bind => '0.0.0.0',
     }
 
 Parameters
 ----------
 
-Check the init.pp file for a list of parameters accepted.
+Check the [init.pp](https://github.com/fsalum/puppet-redis/blob/master/manifests/init.pp) file for a list of parameters accepted.
 
 Author
 ------
