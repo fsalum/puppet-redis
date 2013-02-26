@@ -31,12 +31,12 @@ class redis (
   $service_ensure                   = 'running',
   $service_enable                   = true,
   $conf_daemonize                   = 'yes',
-  $conf_pidfile                     = '/var/run/redis/redis.pid',
+  $conf_pidfile                     = UNSET,
   $conf_port                        = '6379',
   $conf_bind                        = '127.0.0.1',
   $conf_timeout                     = '0',
   $conf_loglevel                    = 'notice',
-  $conf_logfile                     = '/var/log/redis/redis.log',
+  $conf_logfile                     = UNSET,
   $conf_syslog_enabled              = UNSET,
   $conf_syslog_ident                = UNSET,
   $conf_syslog_facility             = UNSET,
@@ -82,6 +82,16 @@ class redis (
 
   include redis::params
 
+  $conf_pidfile_real = $conf_pidfile ? {
+    'UNSET' => $::redis::params::pidfile,
+    default => $conf_pidfile,
+  }
+
+  $conf_logfile_real = $conf_logfile ? {
+    'UNSET' => $::redis::params::logfile,
+    default => $conf_logfile,
+  }
+
   package { 'redis':
     ensure => $package_ensure,
     name   => $::redis::params::package,
@@ -98,7 +108,7 @@ class redis (
 
   file { $::redis::params::conf:
     path    => $::redis::params::conf,
-    content => template('redis/redis.conf.erb'),
+    content => template("redis/$::redis::params::conf_template"),
     owner   => root,
     group   => root,
     mode    => '0644',
