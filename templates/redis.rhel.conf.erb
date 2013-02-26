@@ -18,7 +18,7 @@ daemonize <%= conf_daemonize %>
 
 # When running daemonized, Redis writes a pid file in /var/run/redis.pid by
 # default. You can specify a custom pid file location here.
-pidfile <%= conf_pidfile %>
+pidfile <%= conf_pidfile_real %>
 
 # Accept connections on the specified port, default is 6379.
 # If port 0 is specified Redis will not listen on a TCP socket.
@@ -45,7 +45,7 @@ timeout <%= conf_timeout %>
 # verbose (many rarely useful info, but not a mess like the debug level)
 # notice (moderately verbose, what you want in production probably)
 # warning (only very important / critical messages are logged)
-loglevel <%= conf_loglevel %>
+loglevel <%= conf_loglevel_real %>
 
 # Specify the log file name. Also 'stdout' can be used to force
 # Redis to log on the standard output. Note that if you use standard
