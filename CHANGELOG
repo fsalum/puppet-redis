@@ -1,3 +1,5 @@
+2013-04-18 - Felipe Salum <fsalum@gmail.com> - 0.0.4
+* Creates conf_dir directory if it doesn't exist
 2013-02-25 - Felipe Salum <fsalum@gmail.com> - 0.0.3
 * Fixing redis.conf less options on Debian
 2013-02-25 - Felipe Salum <fsalum@gmail.com> - 0.0.2

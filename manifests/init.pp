@@ -82,6 +82,8 @@ class redis (
 
   include redis::params
 
+  $conf_template = $redis::params::conf_template
+
   $conf_pidfile_real = $conf_pidfile ? {
     'UNSET' => $::redis::params::pidfile,
     default => $conf_pidfile,
@@ -108,7 +110,7 @@ class redis (
 
   file { $::redis::params::conf:
     path    => $::redis::params::conf,
-    content => template("redis/$::redis::params::conf_template"),
+    content => template("redis/${conf_template}"),
     owner   => root,
     group   => root,
     mode    => '0644',
@@ -121,6 +123,25 @@ class redis (
     owner   => root,
     group   => root,
     mode    => '0644',
+  }
+
+  exec { $conf_dir:
+    path    => '/bin:/usr/bin:/sbin:/usr/sbin',
+    command => "mkdir -p ${conf_dir}",
+    user    => root,
+    group   => root,
+    creates => $conf_dir,
+    before  => Service['redis'],
+    require => Package['redis'],
+    notify  => Service['redis'],
+  }
+
+  file { $conf_dir:
+    ensure  => directory,
+    owner   => redis,
+    group   => redis,
+    before  => Service['redis'],
+    require => Exec[$conf_dir],
   }
 
 }
