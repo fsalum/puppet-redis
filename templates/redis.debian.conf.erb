@@ -166,7 +166,7 @@ maxmemory <%= conf_maxmemory %>
 appendonly <%= conf_appendonly %>
 
 # The fsync() call tells the Operating System to actually write data on disk
-# instead to wait for more data in the output buffer. Some OS will really flush 
+# instead to wait for more data in the output buffer. Some OS will really flush
 # data on disk, some other OS will just try to do it ASAP.
 #
 # Redis supports three different modes:
@@ -206,5 +206,5 @@ glueoutputbuf yes
 # WARNING: object sharing is experimental, don't enable this feature
 # in production before of Redis 1.0-stable. Still please try this feature in
 # your development environment so that we can test it better.
-shareobjects no
-shareobjectspoolsize 1024
+# shareobjects no
+# shareobjectspoolsize 1024
