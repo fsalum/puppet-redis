@@ -62,7 +62,7 @@ class redis (
   $conf_auto_aof_rewrite_percentage = '100',
   $conf_auto_aof_rewrite_min_size   = '64mb',
   $conf_slowlog_log_slower_than     = '10000',
-  $conf_slowlog_max_len             = '1024',
+  $conf_slowlog_max_len             = '128',
   $conf_vm_enabled                  = 'no',
   $conf_vm_swap_file                = '/tmp/redis.swap',
   $conf_vm_max_memory               = '0',
