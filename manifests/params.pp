@@ -20,6 +20,7 @@ class redis::params {
       $conf_template = 'redis.rhel.conf.erb'
       $pidfile       = '/var/run/redis/redis.pid'
       $logfile       = '/var/log/redis/redis.log'
+      $init_template = 'redis.init.erb'
     }
     'ubuntu', 'debian': {
       $package       = 'redis-server'
