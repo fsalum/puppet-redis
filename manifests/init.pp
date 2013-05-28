@@ -99,11 +99,12 @@ class redis (
     name   => $::redis::params::package,
   }
 
-  if defined($::redis::params::init_template) {
+  if $::redis::params::init_template != 'UNDEF' {
     file { '/etc/init.d/redis':
       ensure  => present,
       content => template("redis/${$::redis::params::init_template}"),
       mode    => '0755',
+      require => Package['redis'],
     }
   }
 
