@@ -99,6 +99,14 @@ class redis (
     name   => $::redis::params::package,
   }
 
+  if defined($::redis::params::init_template) {
+    file { '/etc/init.d/redis':
+      ensure  => present,
+      content => template("redis/${$::redis::params::init_template}"),
+      mode    => '0755',
+    }
+  }
+
   service { 'redis':
     ensure     => $service_ensure,
     name       => $::redis::params::service,
