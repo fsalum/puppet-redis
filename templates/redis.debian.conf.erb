@@ -2,39 +2,39 @@
 
 # By default Redis does not run as a daemon. Use 'yes' if you need it.
 # Note that Redis will write a pid file in /var/run/redis.pid when daemonized.
-daemonize <%= conf_daemonize %>
+daemonize <%= @conf_daemonize %>
 
 # When run as a daemon, Redis write a pid file in /var/run/redis.pid by default.
 # You can specify a custom pid file location here.
-pidfile <%= conf_pidfile_real %>
+pidfile <%= @conf_pidfile_real %>
 
 # Accept connections on the specified port, default is 6379
-port <%= conf_port %>
+port <%= @conf_port %>
 
 # If you want you can bind a single interface, if the bind option is not
 # specified all the interfaces will listen for connections.
 #
-bind <%= conf_bind %>
+bind <%= @conf_bind %>
 
 # Close the connection after a client is idle for N seconds (0 to disable)
-timeout <%= conf_timeout %>
+timeout <%= @conf_timeout %>
 
 # Set server verbosity to 'debug'
 # it can be one of:
 # debug (a lot of information, useful for development/testing)
 # notice (moderately verbose, what you want in production probably)
 # warning (only very important / critical messages are logged)
-loglevel <%= conf_loglevel %>
+loglevel <%= @conf_loglevel %>
 
 # Specify the log file name. Also 'stdout' can be used to force
 # the demon to log on the standard output. Note that if you use standard
 # output for logging but daemonize, logs will be sent to /dev/null
-logfile <%= conf_logfile_real %>
+logfile <%= @conf_logfile_real %>
 
 # Set the number of databases. The default database is DB 0, you can select
 # a different one on a per-connection basis using SELECT <dbid> where
 # dbid is a number between 0 and 'databases'-1
-databases <%= conf_databases %>
+databases <%= @conf_databases %>
 
 ################################ SNAPSHOTTING  #################################
 #
@@ -49,8 +49,8 @@ databases <%= conf_databases %>
 #   after 900 sec (15 min) if at least 1 key changed
 #   after 300 sec (5 min) if at least 10 keys changed
 #   after 60 sec if at least 10000 keys changed
-<% if conf_save != 'UNSET' %>
-save <%= conf_save %>
+<% if @conf_save != 'UNSET' %>
+save <%= @conf_save %>
 <% else %>
 save 900 1
 save 300 10
@@ -61,14 +61,14 @@ save 60 10000
 # For default that's set to 'yes' as it's almost always a win.
 # If you want to save some CPU in the saving child set it to 'no' but
 # the dataset will likely be bigger if you have compressible values or keys.
-rdbcompression <%= conf_rdbcompression %>
+rdbcompression <%= @conf_rdbcompression %>
 
 # The filename where to dump the DB
-dbfilename <%= conf_dbfilename %>
+dbfilename <%= @conf_dbfilename %>
 
 # For default save/load DB in/from the working directory
 # Note that you must specify a directory not a file name.
-dir <%= conf_dir %>
+dir <%= @conf_dir %>
 
 ################################# REPLICATION #################################
 
@@ -78,8 +78,8 @@ dir <%= conf_dir %>
 # different interval, or to listen to another port, and so on.
 #
 # slaveof <masterip> <masterport>
-<% if conf_slaveof != 'UNSET' %>
-slaveof <%= conf_slaveof %>
+<% if @conf_slaveof != 'UNSET' %>
+slaveof <%= @conf_slaveof %>
 <% end %>
 
 # If the master is password protected (using the "requirepass" configuration
@@ -88,8 +88,8 @@ slaveof <%= conf_slaveof %>
 # refuse the slave request.
 #
 # masterauth <master-password>
-<% if conf_masterauth != 'UNSET' %>
-masterauth <%= conf_masterauth %>
+<% if @conf_masterauth != 'UNSET' %>
+masterauth <%= @conf_masterauth %>
 <% end %>
 
 
@@ -103,8 +103,8 @@ masterauth <%= conf_masterauth %>
 # people do not need auth (e.g. they run their own servers).
 #
 # requirepass foobared
-<% if conf_requirepass != 'UNSET' %>
-requirepass <%= conf_requirepass %>
+<% if @conf_requirepass != 'UNSET' %>
+requirepass <%= @conf_requirepass %>
 <% end %>
 
 
@@ -117,8 +117,8 @@ requirepass <%= conf_requirepass %>
 # an error 'max number of clients reached'.
 #
 # maxclients 128
-<% if conf_maxclients != 'UNSET' %>
-maxclients <%= conf_maxclients %>
+<% if @conf_maxclients != 'UNSET' %>
+maxclients <%= @conf_maxclients %>
 <% end %>
 
 # Don't use more memory than the specified amount of bytes.
@@ -139,8 +139,8 @@ maxclients <%= conf_maxclients %>
 # errors for write operations, and this may even lead to DB inconsistency.
 #
 # maxmemory <bytes>
-<% if conf_maxmemory != 'UNSET' %>
-maxmemory <%= conf_maxmemory %>
+<% if @conf_maxmemory != 'UNSET' %>
+maxmemory <%= @conf_maxmemory %>
 <% end %>
 
 ############################## APPEND ONLY MODE ###############################
@@ -163,7 +163,7 @@ maxmemory <%= conf_maxmemory %>
 # IMPORTANT: Check the BGREWRITEAOF to check how to rewrite the append
 # log file in background when it gets too big.
 
-appendonly <%= conf_appendonly %>
+appendonly <%= @conf_appendonly %>
 
 # The fsync() call tells the Operating System to actually write data on disk
 # instead to wait for more data in the output buffer. Some OS will really flush
@@ -181,7 +181,7 @@ appendonly <%= conf_appendonly %>
 # it want, for better performances (but if you can live with the idea of
 # some data loss consider the default persistence mode that's snapshotting).
 
-appendfsync <%= conf_appendfsync %>
+appendfsync <%= @conf_appendfsync %>
 # appendfsync everysec
 # appendfsync no
 
