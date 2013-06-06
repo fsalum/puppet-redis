@@ -49,12 +49,19 @@ databases <%= @conf_databases %>
 #   after 900 sec (15 min) if at least 1 key changed
 #   after 300 sec (5 min) if at least 10 keys changed
 #   after 60 sec if at least 10000 keys changed
-<% if @conf_save != 'UNSET' %>
-save <%= @conf_save %>
+<% if @conf_nosave != 'UNSET' %>
+#do not persist to disk:
+#save 900 1
+#save 300 10
+#save 60 10000
 <% else %>
-save 900 1
-save 300 10
-save 60 10000
+  <% if @conf_save != 'UNSET' %>
+  save <%= @conf_save %>
+  <% else %>
+  save 900 1
+  save 300 10
+  save 60 10000
+  <% end %>
 <% end %>
 
 # Compress string objects using LZF when dump .rdb databases?

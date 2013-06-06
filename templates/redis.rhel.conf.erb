@@ -95,12 +95,19 @@ databases <%= @conf_databases %>
 #
 #   Note: you can disable saving at all commenting all the "save" lines.
 
-<% if @conf_save != 'UNSET' %>
-save <%= @conf_save %>
+<% if @conf_nosave != 'UNSET' %>
+#do not persist to disk:
+#save 900 1
+#save 300 10
+#save 60 10000
 <% else %>
-save 900 1
-save 300 10
-save 60 10000
+  <% if @conf_save != 'UNSET' %>
+  save <%= @conf_save %>
+  <% else %>
+  save 900 1
+  save 300 10
+  save 60 10000
+  <% end %>
 <% end %>
 
 # Compress string objects using LZF when dump .rdb databases?

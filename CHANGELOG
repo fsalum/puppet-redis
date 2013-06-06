@@ -1,8 +1,37 @@
-2013-04-18 - Felipe Salum <fsalum@gmail.com> - 0.0.4
+## fsalum-redis changelog
+
+Release notes for the fsalum-reids module.
+
+------------------------------------------
+
+#### 0.0.5 - 2013-06-06
+
+* Fix Puppet 3.2.1 deprecation warnings (@ripienaar)
+* Fix duplicate entry for logrotate on Debian/RHEL using different paths (@arthurfurlan)
+* Add $conf_nosave parameter (@fsalum)
+* Minor changes to params variables (@fsalum)
+* Update CHANGELOG format
+
+------------------------------------------
+
+#### 0.0.4 - 2013-04-18
+
 * Creates conf_dir directory if it doesn't exist
-2013-02-25 - Felipe Salum <fsalum@gmail.com> - 0.0.3
+
+------------------------------------------
+
+#### 0.0.3 - 2013-02-25
+
 * Fixing redis.conf less options on Debian
-2013-02-25 - Felipe Salum <fsalum@gmail.com> - 0.0.2
+
+------------------------------------------
+
+#### 0.0.2 - 2013-02-25
+
 * Fixing redis.conf location for Debian
-2013-02-25 - Felipe Salum <fsalum@gmail.com> - 0.0.1
+
+------------------------------------------
+
+#### 0.0.1 - 2013-02-25
+
 * Initial Forge release
