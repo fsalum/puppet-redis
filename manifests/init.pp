@@ -117,12 +117,16 @@ class redis (
     notify  => Service['redis'],
   }
 
-  file { '/etc/logrotate.d/redis':
-    path    => '/etc/logrotate.d/redis',
+  file { '/etc/logrotate.d/redis-server':
+    path    => '/etc/logrotate.d/redis-server',
     content => template('redis/redis.logrotate.erb'),
     owner   => root,
     group   => root,
     mode    => '0644',
+  }
+  file { '/etc/logrotate.d/redis':
+    path    => '/etc/logrotate.d/redis',
+    ensure  => absent,
   }
 
   exec { $conf_dir:
