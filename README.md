@@ -5,6 +5,11 @@ Redis Module for Puppet
 This module install and manages the Redis server. All redis.conf options are
 accepted in the parameterized class.
 
+Operating System
+----------------
+
+Tested on CentOS 6.3 and Debian Squeeze.
+
 Quick Start
 -----------
 

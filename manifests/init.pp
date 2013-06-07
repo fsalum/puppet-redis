@@ -42,6 +42,7 @@ class redis (
   $conf_syslog_facility             = UNSET,
   $conf_databases                   = '16',
   $conf_save                        = UNSET,
+  $conf_nosave                      = UNSET,
   $conf_rdbcompression              = 'yes',
   $conf_dbfilename                  = 'dump.rdb',
   $conf_dir                         = '/var/lib/redis/',
@@ -82,7 +83,11 @@ class redis (
 
   include redis::params
 
-  $conf_template = $redis::params::conf_template
+  $conf_template  = $redis::params::conf_template
+  $conf_redis     = $redis::params::conf
+  $conf_logrotate = $redis::params::conf_logrotate
+  $package        = $redis::params::package
+  $service        = $redis::params::service
 
   $conf_pidfile_real = $conf_pidfile ? {
     'UNSET' => $::redis::params::pidfile,
@@ -96,20 +101,20 @@ class redis (
 
   package { 'redis':
     ensure => $package_ensure,
-    name   => $::redis::params::package,
+    name   => $package,
   }
 
   service { 'redis':
     ensure     => $service_ensure,
-    name       => $::redis::params::service,
+    name       => $service,
     enable     => $service_enable,
     hasrestart => true,
     hasstatus  => true,
     require    => Package['redis'],
   }
 
-  file { $::redis::params::conf:
-    path    => $::redis::params::conf,
+  file { $conf_redis:
+    path    => $conf_redis,
     content => template("redis/${conf_template}"),
     owner   => root,
     group   => root,
@@ -117,8 +122,8 @@ class redis (
     notify  => Service['redis'],
   }
 
-  file { '/etc/logrotate.d/redis-server':
-    path    => '/etc/logrotate.d/redis-server',
+  file { $conf_logrotate:
+    path    => $conf_logrotate,
     content => template('redis/redis.logrotate.erb'),
     owner   => root,
     group   => root,
