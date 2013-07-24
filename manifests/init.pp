@@ -119,6 +119,7 @@ class redis (
     owner   => root,
     group   => root,
     mode    => '0644',
+    require => Package['redis'],
     notify  => Service['redis'],
   }
 
