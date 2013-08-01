@@ -4,6 +4,10 @@ Release notes for the fsalum-redis module.
 
 ------------------------------------------
 
+#### 0.0.6 - 2013-08-01
+
+* Install package before poking config (@doismellburning)
+
 #### 0.0.5 - 2013-06-06
 
 * Fix Puppet 3.2.1 deprecation warnings (@ripienaar)
