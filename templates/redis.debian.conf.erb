@@ -107,7 +107,8 @@ databases <%= @conf_databases %>
 # and persistence, you may want to disable this feature so that Redis will
 # continue to work as usually even if there are problems with disk,
 # permissions, and so forth.
-stop-writes-on-bgsave-error yes
+# TODO: Check version, this is for 2.6
+#stop-writes-on-bgsave-error yes
 
 # Compress string objects using LZF when dump .rdb databases?
 # For default that's set to 'yes' as it's almost always a win.
@@ -122,7 +123,8 @@ rdbcompression <%= @conf_rdbcompression %>
 #
 # RDB files created with checksum disabled have a checksum of zero that will
 # tell the loading code to skip the check.
-rdbchecksum yes
+# TODO: Check version, this is for 2.6
+#rdbchecksum yes
 
 # The filename where to dump the DB
 dbfilename <%= @conf_dbfilename %>
@@ -180,7 +182,8 @@ slave-serve-stale-data yes
 # such as CONFIG, DEBUG, and so forth. To a limited extend you can improve
 # security of read only slaves using 'rename-command' to shadow all the
 # administrative / dangerous commands.
-slave-read-only yes
+# TODO: Check version, this is for 2.6
+#slave-read-only yes
 
 # Slaves send PINGs to server in a predefined interval. It's possible to change
 # this interval with the repl_ping_slave_period option. The default value is 10
@@ -210,7 +213,8 @@ slave-read-only yes
 # Redis Sentinel for promotion.
 #
 # By default the priority is 100.
-slave-priority 100
+# TODO: Check version, this is for 2.6
+#slave-priority 100
 
 ################################## SECURITY ###################################
 
@@ -423,7 +427,8 @@ auto-aof-rewrite-min-size 64mb
 # termination of the script.
 #
 # Set it to 0 or a negative value for unlimited execution without warnings.
-lua-time-limit 5000
+# TODO: Check version, this is for 2.6
+#lua-time-limit 5000
 
 ################################## SLOW LOG ###################################
 
@@ -454,8 +459,10 @@ slowlog-max-len 128
 # Hashes are encoded using a memory efficient data structure when they have a
 # small number of entries, and the biggest entry does not exceed a given
 # threshold. These thresholds can be configured using the following directives.
-hash-max-ziplist-entries 512
-hash-max-ziplist-value 64
+# TODO: Check version, this is for 2.6Lw
+
+#hash-max-ziplist-entries 512
+#hash-max-ziplist-value 64
 
 # Similarly to hashes, small lists are also encoded in a special way in order
 # to save a lot of space. The special representation is only used when
@@ -529,9 +536,10 @@ activerehashing yes
 # subscribers and slaves receive data in a push fashion.
 #
 # Both the hard or the soft limit can be disabled just setting it to zero.
-client-output-buffer-limit normal 0 0 0
-client-output-buffer-limit slave 256mb 64mb 60
-client-output-buffer-limit pubsub 32mb 8mb 60
+# TODO: Check version, this is for 2.6
+#client-output-buffer-limit normal 0 0 0
+#client-output-buffer-limit slave 256mb 64mb 60
+#client-output-buffer-limit pubsub 32mb 8mb 60
 
 ################################## INCLUDES ###################################
 
@@ -541,4 +549,5 @@ client-output-buffer-limit pubsub 32mb 8mb 60
 # other files, so use this wisely.
 #
 # include /path/to/local.conf
-include <%= @conf_d_dir %>/*.conf
+# TODO: Check version, this is for 2.6
+#include <%= @conf_d_dir %>/*.conf
