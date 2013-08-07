@@ -85,6 +85,7 @@ class redis (
 
   $conf_template  = $redis::params::conf_template
   $conf_redis     = $redis::params::conf
+  $conf_d_dir     = $redis::params::conf_d
   $conf_logrotate = $redis::params::conf_logrotate
   $package        = $redis::params::package
   $service        = $redis::params::service
@@ -113,23 +114,29 @@ class redis (
     require    => Package['redis'],
   }
 
+  File {
+    owner => 'root',
+    group => 'root',
+        require => Package['redis'],
+
+  }
   file { $conf_redis:
     path    => $conf_redis,
     content => template("redis/${conf_template}"),
-    owner   => root,
-    group   => root,
     mode    => '0644',
-    require => Package['redis'],
     notify  => Service['redis'],
+  }
+
+  file { $conf_d_dir:
+     ensure => 'directory',
   }
 
   file { $conf_logrotate:
     path    => $conf_logrotate,
     content => template('redis/redis.logrotate.erb'),
-    owner   => root,
-    group   => root,
     mode    => '0644',
   }
+
 
   exec { $conf_dir:
     path    => '/bin:/usr/bin:/sbin:/usr/sbin',
@@ -149,5 +156,4 @@ class redis (
     before  => Service['redis'],
     require => Exec[$conf_dir],
   }
-
 }

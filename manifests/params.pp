@@ -16,6 +16,7 @@ class redis::params {
     'centos', 'redhat', 'fedora': {
       $package        = 'redis'
       $service        = 'redis'
+      $conf_d         = '/etc/redis.conf.d'
       $conf           = '/etc/redis.conf'
       $conf_template  = 'redis.rhel.conf.erb'
       $conf_logrotate = '/etc/logrotate.d/redis'
@@ -24,6 +25,7 @@ class redis::params {
     }
     'ubuntu', 'debian': {
       $package        = 'redis-server'
+      $conf_d         = '/etc/redis/conf.d'
       $service        = 'redis-server'
       $conf           = '/etc/redis/redis.conf'
       $conf_template  = 'redis.debian.conf.erb'
