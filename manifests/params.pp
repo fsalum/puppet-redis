@@ -13,7 +13,7 @@
 class redis::params {
 
   case $::operatingsystem {
-    'centos', 'redhat', 'fedora': {
+    'centos', 'redhat', 'fedora', 'amazon': {
       $package        = 'redis'
       $service        = 'redis'
       $conf           = '/etc/redis.conf'
