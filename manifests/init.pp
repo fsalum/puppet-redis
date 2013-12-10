@@ -79,6 +79,7 @@ class redis (
   $conf_zset_max_ziplist_value      = '64',
   $conf_activerehashing             = 'yes',
   $conf_include                     = UNSET,
+  $conf_glueoutputbuf               = 'yes',
 ) {
 
   include redis::params
