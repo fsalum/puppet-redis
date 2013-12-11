@@ -4,6 +4,11 @@ Release notes for the fsalum-redis module.
 
 ------------------------------------------
 
+#### 0.0.7 - 2013-12-11
+
+* Add glueoutputbuf config option (@kryptx)
+* Add support for Amazon Linux AMI (@mattboston)
+
 #### 0.0.6 - 2013-08-01
 
 * Install package before poking config (@doismellburning)
