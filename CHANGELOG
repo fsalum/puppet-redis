@@ -4,6 +4,10 @@ Release notes for the fsalum-redis module.
 
 ------------------------------------------
 
+#### 0.0.8 - 2013-12-20
+
+* Setting mode permission for conf_dir (@KlavsKlavsen)
+
 #### 0.0.7 - 2013-12-11
 
 * Add glueoutputbuf config option (@kryptx)
