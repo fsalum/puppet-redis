@@ -4,6 +4,10 @@ Release notes for the fsalum-redis module.
 
 ------------------------------------------
 
+#### 0.0.9 - 2014-01-09
+
+* Add quotes around all instances of UNSET (@charlesdunbar)
+
 #### 0.0.8 - 2013-12-20
 
 * Setting mode permission for conf_dir (@KlavsKlavsen)
