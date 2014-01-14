@@ -1,7 +1,11 @@
-source :rubygems
+source 'http://rubygems.org'
 
-puppetversion = ENV.key?('PUPPET_VERSION') ? "= #{ENV['PUPPET_VERSION']}" : ['>= 2.7']
-
+puppetversion = ENV['PUPPET_VERSION']
 gem 'rake'
+gem 'colorize'
+gem 'puppet', puppetversion, :require => false
 gem 'puppet-lint'
-gem 'puppet', puppetversion
+gem 'rspec-puppet'
+gem 'puppetlabs_spec_helper'
+gem 'serverspec'
+gem 'vagrant-aws'

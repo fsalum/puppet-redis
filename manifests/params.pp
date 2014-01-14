@@ -1,6 +1,6 @@
 # Class: redis::params
 #
-# This class configures parameters for the puppet-redis module.
+# This class configures parameters for the redis module.
 #
 # Parameters:
 #

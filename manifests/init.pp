@@ -147,7 +147,7 @@ class redis (
     ensure  => directory,
     owner   => redis,
     group   => redis,
-    mode    => 0755,
+    mode    => '0755',
     before  => Service['redis'],
     require => Exec[$conf_dir],
   }
