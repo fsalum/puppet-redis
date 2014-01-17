@@ -152,4 +152,8 @@ class redis (
     require => Exec[$conf_dir],
   }
 
+  # add necessary kernel parameters
+  # see the redis admin guide here: http://redis.io/topics/admin
+  sysctl { 'vm.overcommit_memory': value => '1' }
+
 }
