@@ -14,8 +14,8 @@
 # === Examples
 #
 #  class { redis:
-#    $conf_port => '6380',
-#    $conf_bind => '0.0.0.0',
+#    conf_port => '6380',
+#    conf_bind => '0.0.0.0',
 #  }
 #
 # === Authors
