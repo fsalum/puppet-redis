@@ -2,7 +2,7 @@ Redis Module for Puppet
 =======================
 [![Build Status](https://secure.travis-ci.org/fsalum/puppet-redis.png)](http://travis-ci.org/fsalum/puppet-redis)
 
-This module install and manages the Redis server. All redis.conf options are
+This module installs and manages a Redis server. All redis.conf options are
 accepted in the parameterized class.
 
 Operating System
@@ -27,7 +27,15 @@ To change the port and listening network interface:
 Parameters
 ----------
 
-Check the [init.pp](https://github.com/fsalum/puppet-redis/blob/master/manifests/init.pp) file for a list of parameters accepted.
+Check the [init.pp](https://github.com/fsalum/puppet-redis/blob/master/manifests/init.pp) file for a complete list of parameters accepted.
+
+To enable and set important Linux kernel sysctl parameters as described in the [Redis Admin Guide](http://redis.io/topics/admin) - use the following configuration option:
+
+    class { 'redis':
+      system_sysctl => true
+    }
+
+By default, this sysctl parameter will not be enabled. Furthermore, you will need the sysctl module defined in the [Modulefile](https://github.com/fsalum/puppet-redis/blob/master/Modulefile) file.
 
 Copyright and License
 ---------------------
