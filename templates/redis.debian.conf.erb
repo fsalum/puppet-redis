@@ -14,7 +14,9 @@ port <%= @conf_port %>
 # If you want you can bind a single interface, if the bind option is not
 # specified all the interfaces will listen for connections.
 #
+<% if @conf_bind != 'UNSET' %>
 bind <%= @conf_bind %>
+<% end %>
 
 # Close the connection after a client is idle for N seconds (0 to disable)
 timeout <%= @conf_timeout %>
