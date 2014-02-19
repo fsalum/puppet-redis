@@ -8,3 +8,6 @@ description 'Module to install and configure a Redis server'
 project_page 'https://github.com/fsalum/puppet-redis'
 
 ## Add dependencies, if any:
+
+# https://forge.puppetlabs.com/thias/sysctl
+dependency 'thias/sysctl', '0.3.0'

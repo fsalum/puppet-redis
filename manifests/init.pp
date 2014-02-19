@@ -5,11 +5,9 @@
 # === Parameters
 #
 # All the redis.conf parameters can be passed to the class.
-# Check the README.md file
+# See below for a complete list of parameters accepted.
 #
-# === Variables
-#
-# Here you should define a list of variables that this module would require.
+# Check the README.md file for any further information about parameters for this class.
 #
 # === Examples
 #
@@ -30,6 +28,7 @@ class redis (
   $package_ensure                   = 'present',
   $service_ensure                   = 'running',
   $service_enable                   = true,
+  $system_sysctl                    = false,
   $conf_daemonize                   = 'yes',
   $conf_pidfile                     = 'UNSET',
   $conf_port                        = '6379',
@@ -150,6 +149,12 @@ class redis (
     mode    => 0755,
     before  => Service['redis'],
     require => Exec[$conf_dir],
+  }
+
+  if ( $system_sysctl == true ) {
+    # add necessary kernel parameters
+    # see the redis admin guide here: http://redis.io/topics/admin
+    sysctl { 'vm.overcommit_memory': value => '1' }
   }
 
 }
