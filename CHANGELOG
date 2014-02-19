@@ -4,6 +4,11 @@ Release notes for the fsalum-redis module.
 
 ------------------------------------------
 
+#### 0.0.10 - 2014-02-19
+
+* Allow conf_bind to be unset (@stevelacey)
+* Changing default of glueoutputbuf to UNSET (@tehmaspc)
+
 #### 0.0.9 - 2014-01-09
 
 * Add quotes around all instances of UNSET (@charlesdunbar)
