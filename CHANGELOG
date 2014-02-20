@@ -4,6 +4,10 @@ Release notes for the fsalum-redis module.
 
 ------------------------------------------
 
+#### 0.0.11 - 2014-02-19
+
+* system_sysctl parameter for redis class (@tehmaspc)
+
 #### 0.0.10 - 2014-02-19
 
 * Allow conf_bind to be unset (@stevelacey)
