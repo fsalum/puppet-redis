@@ -30,33 +30,33 @@ class redis (
   $service_enable                   = true,
   $system_sysctl                    = false,
   $conf_daemonize                   = 'yes',
-  $conf_pidfile                     = 'UNSET',
+  $conf_pidfile                     = undef,
   $conf_port                        = '6379',
   $conf_bind                        = '127.0.0.1',
   $conf_timeout                     = '0',
   $conf_loglevel                    = 'notice',
-  $conf_logfile                     = 'UNSET',
-  $conf_syslog_enabled              = 'UNSET',
-  $conf_syslog_ident                = 'UNSET',
-  $conf_syslog_facility             = 'UNSET',
+  $conf_logfile                     = undef,
+  $conf_syslog_enabled              = undef,
+  $conf_syslog_ident                = undef,
+  $conf_syslog_facility             = undef,
   $conf_databases                   = '16',
-  $conf_save                        = 'UNSET',
-  $conf_nosave                      = 'UNSET',
+  $conf_save                        = undef,
+  $conf_nosave                      = undef,
   $conf_rdbcompression              = 'yes',
   $conf_dbfilename                  = 'dump.rdb',
   $conf_dir                         = '/var/lib/redis/',
-  $conf_slaveof                     = 'UNSET',
-  $conf_masterauth                  = 'UNSET',
+  $conf_slaveof                     = undef,
+  $conf_masterauth                  = undef,
   $conf_slave_server_stale_data     = 'yes',
   $conf_repl_ping_slave_period      = '10',
   $conf_repl_timeout                = '60',
-  $conf_requirepass                 = 'UNSET',
-  $conf_maxclients                  = 'UNSET',
-  $conf_maxmemory                   = 'UNSET',
-  $conf_maxmemory_policy            = 'UNSET',
-  $conf_maxmemory_samples           = 'UNSET',
+  $conf_requirepass                 = undef,
+  $conf_maxclients                  = undef,
+  $conf_maxmemory                   = undef,
+  $conf_maxmemory_policy            = undef,
+  $conf_maxmemory_samples           = undef,
   $conf_appendonly                  = 'no',
-  $conf_appendfilename              = 'UNSET',
+  $conf_appendfilename              = undef,
   $conf_appendfsync                 = 'everysec',
   $conf_no_appendfsync_on_rewrite   = 'no',
   $conf_auto_aof_rewrite_percentage = '100',
@@ -77,8 +77,8 @@ class redis (
   $conf_zset_max_ziplist_entries    = '128',
   $conf_zset_max_ziplist_value      = '64',
   $conf_activerehashing             = 'yes',
-  $conf_include                     = 'UNSET',
-  $conf_glueoutputbuf               = 'UNSET',
+  $conf_include                     = undef,
+  $conf_glueoutputbuf               = undef,
 ) {
 
   include redis::params
@@ -89,14 +89,16 @@ class redis (
   $package        = $redis::params::package
   $service        = $redis::params::service
 
-  $conf_pidfile_real = $conf_pidfile ? {
-    'UNSET' => $::redis::params::pidfile,
-    default => $conf_pidfile,
+  if $conf_pidfile {
+    $conf_pidfile_real = $conf_pidfile
+  }else{
+    $conf_pidfile_real = $::redis::params::pidfile
   }
 
-  $conf_logfile_real = $conf_logfile ? {
-    'UNSET' => $::redis::params::logfile,
-    default => $conf_logfile,
+  if $conf_logfile {
+    $conf_logfile_real = $conf_logfile
+  }else{
+    $conf_logfile_real = $::redis::params::logfile
   }
 
   package { 'redis':
