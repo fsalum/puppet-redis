@@ -32,7 +32,7 @@ class redis (
   $conf_daemonize                   = 'yes',
   $conf_pidfile                     = undef,
   $conf_port                        = '6379',
-  $conf_bind                        = '127.0.0.1',
+  $conf_bind                        = '0.0.0.0',
   $conf_timeout                     = '0',
   $conf_loglevel                    = 'notice',
   $conf_logfile                     = undef,
