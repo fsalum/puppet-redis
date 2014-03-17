@@ -30,6 +30,7 @@ class redis (
   $package_ensure                   = 'present',
   $service_ensure                   = 'running',
   $service_enable                   = true,
+  $service_restart                  = true,
   $conf_daemonize                   = 'yes',
   $conf_pidfile                     = 'UNSET',
   $conf_port                        = '6379',
@@ -121,7 +122,6 @@ class redis (
     group   => root,
     mode    => '0644',
     require => Package['redis'],
-    notify  => Service['redis'],
   }
 
   file { $conf_logrotate:
@@ -140,7 +140,6 @@ class redis (
     creates => $conf_dir,
     before  => Service['redis'],
     require => Package['redis'],
-    notify  => Service['redis'],
   }
 
   file { $conf_dir:
@@ -150,6 +149,11 @@ class redis (
     mode    => 0755,
     before  => Service['redis'],
     require => Exec[$conf_dir],
+  }
+
+  if $service_restart == true {
+    Exec[$conf_redis] ~> Service['redis']
+    File[$conf_redis] ~> Service['redis']
   }
 
 }
