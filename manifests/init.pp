@@ -112,7 +112,9 @@ class redis (
     enable     => $service_enable,
     hasrestart => true,
     hasstatus  => true,
-    require    => Package['redis'],
+    require    => [ Package['redis'],
+                    Exec[$conf_dir],
+                    File[$conf_redis] ],
   }
 
   file { $conf_redis:
