@@ -152,7 +152,7 @@ class redis (
   }
 
   if $service_restart == true {
-    Exec[$conf_redis] ~> Service['redis']
+    Exec[$conf_dir] ~> Service['redis']
     File[$conf_redis] ~> Service['redis']
   }
 
