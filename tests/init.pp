@@ -10,6 +10,7 @@ node default {
     conf_port     => '6379',
     conf_bind     => '0.0.0.0',
     system_sysctl => true,
+    require       => Package['epel-release'],
   }
 
 }

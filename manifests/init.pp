@@ -28,6 +28,7 @@ class redis (
   $package_ensure                   = 'present',
   $service_ensure                   = 'running',
   $service_enable                   = true,
+  $service_restart                  = true,
   $system_sysctl                    = false,
   $conf_daemonize                   = 'yes',
   $conf_pidfile                     = undef,
@@ -112,7 +113,9 @@ class redis (
     enable     => $service_enable,
     hasrestart => true,
     hasstatus  => true,
-    require    => Package['redis'],
+    require    => [ Package['redis'],
+                    Exec[$conf_dir],
+                    File[$conf_redis] ],
   }
 
   file { $conf_redis:
@@ -122,7 +125,6 @@ class redis (
     group   => root,
     mode    => '0644',
     require => Package['redis'],
-    notify  => Service['redis'],
   }
 
   file { $conf_logrotate:
@@ -141,7 +143,6 @@ class redis (
     creates => $conf_dir,
     before  => Service['redis'],
     require => Package['redis'],
-    notify  => Service['redis'],
   }
 
   file { $conf_dir:
@@ -157,6 +158,12 @@ class redis (
     # add necessary kernel parameters
     # see the redis admin guide here: http://redis.io/topics/admin
     sysctl { 'vm.overcommit_memory': value => '1' }
+  }
+
+  if $service_restart == true {
+    # https://github.com/fsalum/puppet-redis/pull/28
+    Exec[$conf_dir] ~> Service['redis']
+    File[$conf_redis] ~> Service['redis']
   }
 
 }
