@@ -4,6 +4,11 @@ Release notes for the fsalum-redis module.
 
 ------------------------------------------
 
+#### 0.0.12 - 2014-03-21
+
+* Unset cleanup #27 (@trlinkin)
+* toggle ability to notify service to restart when config file changes #28 (@tmclaugh)
+
 #### 0.0.11 - 2014-02-19
 
 * system_sysctl parameter for redis class (@tehmaspc)
