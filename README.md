@@ -29,6 +29,8 @@ Parameters
 
 Check the [init.pp](https://github.com/fsalum/puppet-redis/blob/master/manifests/init.pp) file for a complete list of parameters accepted.
 
+* custom sysctl
+
 To enable and set important Linux kernel sysctl parameters as described in the [Redis Admin Guide](http://redis.io/topics/admin) - use the following configuration option:
 
     class { 'redis':
@@ -36,6 +38,16 @@ To enable and set important Linux kernel sysctl parameters as described in the [
     }
 
 By default, this sysctl parameter will not be enabled. Furthermore, you will need the sysctl module defined in the [Modulefile](https://github.com/fsalum/puppet-redis/blob/master/Modulefile) file.
+
+* service restart
+
+If you need to execute a controlled restart of redis after changes due master/slave relationships to avoid that both are restarted at the same time use the parameter below.
+
+    class { 'redis':
+      service_restart => false
+    }
+
+By default service restart is true.
 
 Copyright and License
 ---------------------
