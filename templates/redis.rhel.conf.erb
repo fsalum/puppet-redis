@@ -27,9 +27,7 @@ port <%= @conf_port %>
 # If you want you can bind a single interface, if the bind option is not
 # specified all the interfaces will listen for incoming connections.
 #
-<% if @conf_bind != 'UNSET' %>
 bind <%= @conf_bind %>
-<% end %>
 
 # Specify the path for the unix socket that will be used to listen for
 # incoming connections. There is no default, so Redis will not listen
@@ -56,21 +54,21 @@ logfile <%= @conf_logfile_real %>
 
 # To enable logging to the system logger, just set 'syslog-enabled' to yes,
 # and optionally update the other syslog parameters to suit your needs.
-<% if @conf_syslog_enabled != 'UNSET' %>
+<% if @conf_syslog_enabled %>
 syslog-enabled <%= @conf_syslog_enabled %>
 <% else %>
 # syslog-enabled no
 <% end %>
 
 # Specify the syslog identity.
-<% if @conf_syslog_ident != 'UNSET' %>
+<% if @conf_syslog_ident %>
 syslog-ident <%= @conf_syslog_ident %>
 <% else %>
 # syslog-ident redis
 <% end %>
 
 # Specify the syslog facility.  Must be USER or between LOCAL0-LOCAL7.
-<% if @conf_syslog_facility != 'UNSET' %>
+<% if @conf_syslog_facility %>
 syslog-facility <%= @conf_syslog_facility %>
 <% else %>
 # syslog-facility local0
@@ -97,13 +95,13 @@ databases <%= @conf_databases %>
 #
 #   Note: you can disable saving at all commenting all the "save" lines.
 
-<% if @conf_nosave != 'UNSET' %>
+<% if @conf_nosave %>
 #do not persist to disk:
 #save 900 1
 #save 300 10
 #save 60 10000
 <% else %>
-  <% if @conf_save != 'UNSET' %>
+  <% if @conf_save %>
   save <%= @conf_save %>
   <% else %>
   save 900 1
@@ -138,7 +136,7 @@ dir <%= @conf_dir %>
 # so for example it is possible to configure the slave to save the DB with a
 # different interval, or to listen to another port, and so on.
 #
-<% if @conf_slaveof != 'UNSET' %>
+<% if @conf_slaveof %>
 slaveof <%= @conf_slaveof %>
 <% else %>
 # slaveof <masterip> <masterport>
@@ -149,7 +147,7 @@ slaveof <%= @conf_slaveof %>
 # starting the replication synchronization process, otherwise the master will
 # refuse the slave request.
 #
-<% if @conf_masterauth != 'UNSET' %>
+<% if @conf_masterauth %>
 masterauth <%= @conf_masterauth %>
 <% else %>
 # masterauth <master-password>
@@ -198,7 +196,7 @@ repl-timeout <%= @conf_repl_timeout %>
 # 150k passwords per second against a good box. This means that you should
 # use a very strong password otherwise it will be very easy to break.
 #
-<% if @conf_requirepass != 'UNSET' %>
+<% if @conf_requirepass %>
 requirepass <%= @conf_requirepass %>
 <% else %>
 # requirepass foobared
@@ -229,7 +227,7 @@ requirepass <%= @conf_requirepass %>
 # an error 'max number of clients reached'.
 #
 # maxclients 128
-<% if @conf_maxclients != 'UNSET' %>
+<% if @conf_maxclients %>
 maxclients <%= @conf_maxclients %>
 <% end %>
 
@@ -257,7 +255,7 @@ maxclients <%= @conf_maxclients %>
 # output buffers (but this is not needed if the policy is 'noeviction').
 #
 # maxmemory <bytes>
-<% if @conf_maxmemory != 'UNSET' %>
+<% if @conf_maxmemory %>
 maxmemory <%= @conf_maxmemory %>
 <% end %>
 
@@ -283,7 +281,7 @@ maxmemory <%= @conf_maxmemory %>
 # The default is:
 #
 # maxmemory-policy volatile-lru
-<% if @conf_maxmemory_policy != 'UNSET' %>
+<% if @conf_maxmemory_policy %>
 maxmemory-policy <%= @conf_maxmemory_policy %>
 <% end %>
 
@@ -294,7 +292,7 @@ maxmemory-policy <%= @conf_maxmemory_policy %>
 # using the following configuration directive.
 #
 # maxmemory-samples 3
-<% if @conf_maxmemory_samples != 'UNSET' %>
+<% if @conf_maxmemory_samples %>
 maxmemory-samples <%= @conf_maxmemory_samples %>
 <% end %>
 
@@ -320,7 +318,7 @@ appendonly <%= @conf_appendonly %>
 
 # The name of the append only file (default: "appendonly.aof")
 # appendfilename appendonly.aof
-<% if @conf_appendfilename != 'UNSET' %>
+<% if @conf_appendfilename %>
 appendfilename <%= @conf_appendfilename %>
 <% end %>
 
@@ -544,6 +542,6 @@ activerehashing <%= @conf_activerehashing %>
 #
 # include /path/to/local.conf
 # include /path/to/other.conf
-<% if @conf_include != 'UNSET' %>
+<% if @conf_include %>
 include <%= @conf_include %>
 <% end %>

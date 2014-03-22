@@ -14,9 +14,7 @@ port <%= @conf_port %>
 # If you want you can bind a single interface, if the bind option is not
 # specified all the interfaces will listen for connections.
 #
-<% if @conf_bind != 'UNSET' %>
 bind <%= @conf_bind %>
-<% end %>
 
 # Close the connection after a client is idle for N seconds (0 to disable)
 timeout <%= @conf_timeout %>
@@ -51,13 +49,13 @@ databases <%= @conf_databases %>
 #   after 900 sec (15 min) if at least 1 key changed
 #   after 300 sec (5 min) if at least 10 keys changed
 #   after 60 sec if at least 10000 keys changed
-<% if @conf_nosave != 'UNSET' %>
+<% if @conf_nosave %>
 #do not persist to disk:
 #save 900 1
 #save 300 10
 #save 60 10000
 <% else %>
-  <% if @conf_save != 'UNSET' %>
+  <% if @conf_save %>
   save <%= @conf_save %>
   <% else %>
   save 900 1
@@ -87,7 +85,7 @@ dir <%= @conf_dir %>
 # different interval, or to listen to another port, and so on.
 #
 # slaveof <masterip> <masterport>
-<% if @conf_slaveof != 'UNSET' %>
+<% if @conf_slaveof %>
 slaveof <%= @conf_slaveof %>
 <% end %>
 
@@ -97,7 +95,7 @@ slaveof <%= @conf_slaveof %>
 # refuse the slave request.
 #
 # masterauth <master-password>
-<% if @conf_masterauth != 'UNSET' %>
+<% if @conf_masterauth %>
 masterauth <%= @conf_masterauth %>
 <% end %>
 
@@ -112,7 +110,7 @@ masterauth <%= @conf_masterauth %>
 # people do not need auth (e.g. they run their own servers).
 #
 # requirepass foobared
-<% if @conf_requirepass != 'UNSET' %>
+<% if @conf_requirepass %>
 requirepass <%= @conf_requirepass %>
 <% end %>
 
@@ -126,7 +124,7 @@ requirepass <%= @conf_requirepass %>
 # an error 'max number of clients reached'.
 #
 # maxclients 128
-<% if @conf_maxclients != 'UNSET' %>
+<% if @conf_maxclients %>
 maxclients <%= @conf_maxclients %>
 <% end %>
 
@@ -148,7 +146,7 @@ maxclients <%= @conf_maxclients %>
 # errors for write operations, and this may even lead to DB inconsistency.
 #
 # maxmemory <bytes>
-<% if @conf_maxmemory != 'UNSET' %>
+<% if @conf_maxmemory %>
 maxmemory <%= @conf_maxmemory %>
 <% end %>
 
@@ -199,7 +197,7 @@ appendfsync <%= @conf_appendfsync %>
 # Glue small output buffers together in order to send small replies in a
 # single TCP packet. Uses a bit more CPU but most of the times it is a win
 # in terms of number of queries per second. Use 'yes' if unsure.
-<% if @conf_glueoutputbuf != 'UNSET' %>
+<% if @conf_glueoutputbuf %>
 glueoutputbuf <%= @conf_glueoutputbuf %>
 <% end %>
 
