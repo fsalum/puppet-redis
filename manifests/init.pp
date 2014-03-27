@@ -28,6 +28,7 @@
 #
 class redis (
   $package_ensure         = 'present',
+  $service_manage         = false,
   $service_ensure         = 'running',
   $service_enable         = true,
   $conf_daemonize         = 'yes',
@@ -103,13 +104,15 @@ class redis (
     name   => $package,
   }
 
-  service { 'redis':
-    ensure     => $service_ensure,
-    name       => $service,
-    enable     => $service_enable,
-    hasrestart => true,
-    hasstatus  => true,
-    require    => Package['redis'],
+  if $service_manage != false {
+    service { 'redis':
+      ensure     => $service_ensure,
+      name       => $service,
+      enable     => $service_enable,
+      hasrestart => true,
+      hasstatus  => true,
+      require    => Package['redis'],
+    }
   }
 
   File {
