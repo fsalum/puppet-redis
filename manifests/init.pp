@@ -113,6 +113,17 @@ class redis (
       hasstatus  => true,
       require    => Package['redis'],
     }
+
+    Exec[$conf_dir] {
+      before => Service['redis'],
+      notify => Service['redis'],
+    }
+
+    File[$conf_dir] {
+      before => Service['redis'], }
+
+    File[$conf_redis] {
+      notify => Service['redis'], }
   }
 
   File {
@@ -125,7 +136,6 @@ class redis (
     path    => $conf_redis,
     content => template("redis/${conf_template}"),
     mode    => '0644',
-    notify  => Service['redis'],
   }
 
   file { $conf_d_dir: ensure => 'directory', }
@@ -137,21 +147,18 @@ class redis (
   }
 
   exec { $conf_dir:
-    path    => '/bin:/usr/bin:/sbin:/usr/sbin',
+    path    => ['/bin', '/usr/bin', '/sbin', '/usr/sbin'],
     command => "mkdir -p ${conf_dir}",
     user    => root,
     group   => root,
     creates => $conf_dir,
-    before  => Service['redis'],
     require => Package['redis'],
-    notify  => Service['redis'],
   }
 
   file { $conf_dir:
     ensure  => directory,
-    owner   => redis,
-    group   => redis,
-    before  => Service['redis'],
+    owner   => 'redis',
+    group   => 'redis',
     require => Exec[$conf_dir],
   }
 }
