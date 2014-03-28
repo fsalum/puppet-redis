@@ -12,8 +12,8 @@
 #
 class redis::params {
 
-  case $::operatingsystem {
-    'centos', 'redhat', 'fedora', 'amazon': {
+  case $::osfamily {
+    'redhat': {
       $package        = 'redis'
       $service        = 'redis'
       $conf           = '/etc/redis.conf'
@@ -22,7 +22,7 @@ class redis::params {
       $pidfile        = '/var/run/redis/redis.pid'
       $logfile        = '/var/log/redis/redis.log'
     }
-    'ubuntu', 'debian': {
+    'debian': {
       $package        = 'redis-server'
       $service        = 'redis-server'
       $conf           = '/etc/redis/redis.conf'
@@ -32,7 +32,7 @@ class redis::params {
       $logfile        = '/var/log/redis/redis-server.log'
     }
     default: {
-      fail("Unsupported osfamily: ${::osfamily} operatingsystem: ${::operatingsystem}, module ${module_name} only support osfamily RedHat and Debian")
+      fail("Unsupported osfamily: ${::osfamily}, module ${module_name} only support osfamily RedHat and Debian")
     }
   }
 
