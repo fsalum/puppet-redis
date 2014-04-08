@@ -410,6 +410,7 @@ slowlog-log-slower-than <%= @conf_slowlog_log_slower_than %>
 # You can reclaim memory used by the slow log with SLOWLOG RESET.
 slowlog-max-len <%= @conf_slowlog_max_len %>
 
+<% if @redis_version == "2.4.X"-%>
 ################################ VIRTUAL MEMORY ###############################
 
 ### WARNING! Virtual Memory is deprecated in Redis 2.4
@@ -532,7 +533,7 @@ zset-max-ziplist-value <%= @conf_zset_max_ziplist_value %>
 # use "activerehashing yes" if you don't have such hard requirements but
 # want to free memory asap when possible.
 activerehashing <%= @conf_activerehashing %>
-
+<%end-%>
 ################################## INCLUDES ###################################
 
 # Include one or more other config files here.  This is useful if you
