@@ -682,6 +682,7 @@ slowlog-log-slower-than <%= @conf_slowlog_log_slower_than %>
 slowlog-max-len <%= @conf_slowlog_max_len %>
 <%- end -%>
 
+<%- if @redis_version == "2.4.x" -%>
 ################################ VIRTUAL MEMORY ###############################
 
 ### WARNING! Virtual Memory is deprecated in Redis 2.4
@@ -765,6 +766,7 @@ vm-pages <%= @conf_vm_pages %>
 # Virtual Memory implementation.
 <%- if @conf_vm_max_threads -%>
 vm-max-threads <%= @conf_vm_max_threads %>
+<%- end -%>
 <%- end -%>
 
 ############################# Event notification ##############################
