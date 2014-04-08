@@ -410,7 +410,7 @@ slowlog-log-slower-than <%= @conf_slowlog_log_slower_than %>
 # You can reclaim memory used by the slow log with SLOWLOG RESET.
 slowlog-max-len <%= @conf_slowlog_max_len %>
 
-<% if @redis_version == "2.4.X"-%>
+<% if @redis_version == "2.4.x"-%>
 ################################ VIRTUAL MEMORY ###############################
 
 ### WARNING! Virtual Memory is deprecated in Redis 2.4
