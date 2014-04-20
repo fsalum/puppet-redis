@@ -4,6 +4,21 @@ Release notes for the fsalum-redis module.
 
 ------------------------------------------
 
+#### 1.0.0 - 2014-06-08
+
+Many CHANGES to this version, complete rewrite of redis.conf template 
+to support Redis 2.2 to 2.8.
+
+Make sure to test the module and parameters before upgrading in production.
+
+Thanks to @zxjinn and @zeroecco for their hard work on this release.
+
+* some parameters were removed, added and/or default values changed
+* update redis.conf to the latest version available #32 (@zxjinn)
+* Logic for redis config file to support 2.2.x through 2.8.x #31 (@zeroecco)
+* Unixsocketoptions #33 (@nbeernink)
+* Changed operating system check to validate osfamily #29 (@george-b)
+
 #### 0.0.12 - 2014-03-21
 
 * Unset cleanup #27 (@trlinkin)

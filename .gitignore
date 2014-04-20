@@ -4,3 +4,4 @@ Gemfile.lock
 .librarian
 .tmp
 Puppetfile.lock
+Vagrantfile

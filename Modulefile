@@ -1,5 +1,5 @@
 name    'fsalum-redis'
-version '0.0.12'
+version '1.0.0'
 source 'git://github.com/fsalum/puppet-redis.git'
 author 'Felipe Salum'
 license 'Apache License, Version 2.0'
