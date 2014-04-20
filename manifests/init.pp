@@ -176,7 +176,6 @@ class redis (
     # add necessary kernel parameters
     # see the redis admin guide here: http://redis.io/topics/admin
     sysctl { 'vm.overcommit_memory':
-      permanent => 'yes',
       value     => '1',
     }
   }

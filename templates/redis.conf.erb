@@ -177,7 +177,7 @@ databases <%= @conf_databases %>
 # do not persist to disk
 <%- else -%>
 <%- @conf_save.sort.each do |seconds, changes| -%>
-save <%= seconds -%> <%= changes -%>
+save <%= seconds -%> <%= changes -%> <%= "\n" -%>
 <%- end -%>
 <%- end -%>
 # By default Redis will stop accepting writes if RDB snapshots are enabled
@@ -830,11 +830,20 @@ glueoutputbuf <%= @conf_glueoutputbuf %>
 # Hashes are encoded using a memory efficient data structure when they have a
 # small number of entries, and the biggest entry does not exceed a given
 # threshold. These thresholds can be configured using the following directives.
+<%- if @redis_version == "2.4.x" -%>
+<%- if @conf_hash_max_zipmap_entries -%>
+hash-max-zipmap-entries <%= @conf_hash_max_zipmap_entries %>
+<%- end -%>
+<%- if @conf_hash_max_zipmap_value -%>
+hash-max-zipmap-value <%= @conf_hash_max_zipmap_value %>
+<%- end -%>
+<%- else -%>
 <%- if @conf_hash_max_zipmap_entries -%>
 hash-max-ziplist-entries <%= @conf_hash_max_zipmap_entries %>
 <%- end -%>
 <%- if @conf_hash_max_zipmap_value -%>
 hash-max-ziplist-value <%= @conf_hash_max_zipmap_value %>
+<%- end -%>
 <%- end -%>
 
 # Similarly to hashes, small lists are also encoded in a special way in order
