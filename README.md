@@ -8,7 +8,8 @@ accepted in the parameterized class.
 Operating System
 ----------------
 
-Tested on CentOS 6.3 and Debian Squeeze.
+Tested on CentOS 6.5, Ubuntu Saucy/Trusty/Precise, Debian 7.4  
+redis.conf options compatible with Redis 2.2, 2.4, 2.6, 2.8  
 
 Quick Start
 -----------
