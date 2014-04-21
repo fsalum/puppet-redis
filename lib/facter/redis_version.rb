@@ -12,6 +12,9 @@ Facter.add("redis_version") do
       end
 
       case redis_version
+        when /2\.2\.[0-9]/
+          #set version to 2.2
+          redis_version = '2.2.x'
         when /2\.4\.[0-9]/
           #set version to 2.4
           redis_version = '2.4.x'

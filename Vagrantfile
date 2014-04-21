@@ -8,7 +8,7 @@ end
 
 redis = {
     :'centos65' => { :memory => '120', :ip => '10.1.1.13', :box => 'puppetlabs/centos-6.5-64-puppet',   :domain => 'redis.local' },
-    :'trusty'   => { :memory => '120', :ip => '10.1.1.14', :box => 'ubuntu/trusty64',                   :domain => 'redis.local' },
+    :'trusty'   => { :memory => '240', :ip => '10.1.1.14', :box => 'ubuntu/trusty64',                   :domain => 'redis.local' },
     :'saucy'    => { :memory => '120', :ip => '10.1.1.15', :box => 'puppetlabs/ubuntu-13.10-64-puppet', :domain => 'redis.local' },
     :'precise'  => { :memory => '120', :ip => '10.1.1.16', :box => 'puppetlabs/ubuntu-12.04-64-puppet', :domain => 'redis.local' },
     :'debian74' => { :memory => '120', :ip => '10.1.1.17', :box => 'puppetlabs/debian-7.4-64-puppet',   :domain => 'redis.local' },
