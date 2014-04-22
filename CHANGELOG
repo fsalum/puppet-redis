@@ -4,6 +4,12 @@ Release notes for the fsalum-redis module.
 
 ------------------------------------------
 
+#### 1.0.0 - 2014-04-20
+
+* MANY CHANGES to this version, make sure to test before upgrading in production
+* update redis.conf to the latest version available #32 (@zxjinn)
+* Logic for redis config file to support 2.4.x through 2.8.x #31 (@zeroecco)
+
 #### 0.0.12 - 2014-03-21
 
 * Unset cleanup #27 (@trlinkin)
