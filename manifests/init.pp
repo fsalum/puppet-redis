@@ -27,6 +27,7 @@
 class redis (
   $conf_activerehashing                   = 'yes',
   $conf_aof_rewrite_incremental_fsync     = 'yes', # 2.6+
+  $conf_append                            = {}, # hash of custom variables+values
   $conf_appendfilename                    = undef, # default appendonly.aof
   $conf_appendfsync                       = 'everysec',
   $conf_appendonly                        = 'no',
