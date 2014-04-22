@@ -537,7 +537,9 @@ activerehashing <%= @conf_activerehashing %>
 # include /path/to/local.conf
 # include /path/to/other.conf
 <%- if @conf_include -%>
-include <%= @conf_include %>
+<%- @conf_include.each do |include| -%>
+include <%= include %><%= "\n" -%>
+<%- end -%>
 <%- end -%>
 <%- end -%>
 <%- if @redis_version == "2.4.x" -%>
@@ -1158,7 +1160,9 @@ activerehashing <%= @conf_activerehashing %>
 # include /path/to/local.conf
 # include /path/to/other.conf
 <%- if @conf_include -%>
-include <%= @conf_include %>
+<%- @conf_include.each do |include| -%>
+include <%= include %><%= "\n" -%>
+<%- end -%>
 <%- end -%>
 <%- end -%>
 <%- if @redis_version == "2.6.x" -%>
@@ -1879,7 +1883,9 @@ aof-rewrite-incremental-fsync <%= @conf_aof_rewrite_incremental_fsync %>
 # include /path/to/local.conf
 # include /path/to/other.conf
 <%- if @conf_include -%>
-include <%= @conf_include %>
+<%- @conf_include.each do |include| -%>
+include <%= include %><%= "\n" -%>
+<%- end -%>
 <%- end -%>
 <%- end -%>
 <%- if @redis_version == "2.8.x" -%>
@@ -1917,7 +1923,9 @@ include <%= @conf_include %>
 # include /path/to/local.conf
 # include /path/to/other.conf
 <%- if @conf_include -%>
-include <%= @conf_include %>
+<%- @conf_include.each do |include| -%>
+include <%= include %><%= "\n" -%>
+<%- end -%>
 <%- end -%>
 
 ################################ GENERAL  #####################################
