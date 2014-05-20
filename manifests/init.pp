@@ -80,6 +80,9 @@ class redis (
   $conf_activerehashing             = 'yes',
   $conf_include                     = undef,
   $conf_glueoutputbuf               = undef,
+  $conf_unixsocket_enabled          = undef,
+  $conf_unixsocket                  = '/tmp/redis.sock',
+  $conf_unixsocketperm              = '755'
 ) {
 
   include redis::params
@@ -149,7 +152,7 @@ class redis (
     ensure  => directory,
     owner   => redis,
     group   => redis,
-    mode    => 0755,
+    mode    => '0755',
     before  => Service['redis'],
     require => Exec[$conf_dir],
   }
