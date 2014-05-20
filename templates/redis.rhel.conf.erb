@@ -33,8 +33,13 @@ bind <%= @conf_bind %>
 # incoming connections. There is no default, so Redis will not listen
 # on a unix socket when not specified.
 #
+<% if @conf_unixsocket_enabled %>
+unixsocket <%= @conf_unixsocket %>
+unixsocketperm <%= @conf_unixsocketperm %>
+<% else %>
 # unixsocket /tmp/redis.sock
 # unixsocketperm 755
+<% end %>
 
 # Close the connection after a client is idle for N seconds (0 to disable)
 timeout <%= @conf_timeout %>

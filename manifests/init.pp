@@ -80,6 +80,9 @@ class redis (
   $conf_activerehashing             = 'yes',
   $conf_include                     = undef,
   $conf_glueoutputbuf               = undef,
+  $conf_unixsocket_enabled          = undef,
+  $conf_unixsocket                  = '/tmp/redis.sock',
+  $conf_unixsocketperm              = '755'
 ) {
 
   include redis::params
