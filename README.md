@@ -5,10 +5,21 @@ Redis Module for Puppet
 This module installs and manages a Redis server. All redis.conf options are
 accepted in the parameterized class.
 
+Important
+---------
+
+If you are upgrading this module from 0.x to 1.0+, please test it carefully 
+outside production as it is not fully backwards compatible.
+
+Some class parameters were added, removed or had their default values changed.
+
+The redis.conf template has been completely rewritten to support Redis 2.2+ to 2.8+.
+
 Operating System
 ----------------
 
-Tested on CentOS 6.3 and Debian Squeeze.
+Tested on CentOS 6.5, Ubuntu Saucy/Trusty/Precise, Debian 7.4  
+redis.conf options compatible with Redis 2.2, 2.4, 2.6, 2.8  
 
 Quick Start
 -----------
