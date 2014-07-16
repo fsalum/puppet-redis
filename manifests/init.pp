@@ -98,6 +98,7 @@ class redis (
   $conf_zset_max_ziplist_entries          = '128', # 2.4+
   $conf_zset_max_ziplist_value            = '64', # 2.4+
   $package_ensure                         = 'present',
+  $package_name                           = undef,
   $service_enable                         = true,
   $service_ensure                         = 'running',
   $service_restart                        = true,
@@ -108,7 +109,12 @@ class redis (
 
   $conf_redis     = $redis::params::conf
   $conf_logrotate = $redis::params::conf_logrotate
-  $package        = $redis::params::package
+  if is_string($package_name) {
+    $package     = $package_name
+  }
+  else {
+    $package      = $redis::params::package
+  }
   $service        = $redis::params::service
 
   if $conf_pidfile {
