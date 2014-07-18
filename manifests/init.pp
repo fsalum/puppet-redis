@@ -109,13 +109,13 @@ class redis (
 
   $conf_redis     = $redis::params::conf
   $conf_logrotate = $redis::params::conf_logrotate
-  if is_string($package_name) {
+  $service        = $redis::params::service
+
+  if $package_name {
     $package     = $package_name
-  }
-  else {
+  }else{
     $package      = $redis::params::package
   }
-  $service        = $redis::params::service
 
   if $conf_pidfile {
     $conf_pidfile_real = $conf_pidfile

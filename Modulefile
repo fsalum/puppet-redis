@@ -11,5 +11,3 @@ project_page 'https://github.com/fsalum/puppet-redis'
 
 # https://forge.puppetlabs.com/thias/sysctl
 dependency 'thias/sysctl', '>= 0.3.0'
-# https://forge.puppetlabs.com/puppetlabs/stdlib/
-dependency 'puppetlabs/stdlib', '>= 3.2.1'
