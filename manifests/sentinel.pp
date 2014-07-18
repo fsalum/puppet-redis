@@ -93,12 +93,12 @@ class redis::sentinel (
   }
 
   file { $conf_sentinel:
-    path    => $conf_sentinel,
-    content => template('redis/sentinel.conf.erb'),
-    owner   => redis,
-    group   => redis,
-    mode    => '0644',
-    replace => false,
+    path      => $conf_sentinel,
+    content   => template('redis/sentinel.conf.erb'),
+    owner     => redis,
+    group     => redis,
+    mode      => '0644',
+    subscribe => Service['sentinel'],
   }
 
   file { $conf_logrotate:
