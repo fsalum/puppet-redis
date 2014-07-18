@@ -64,16 +64,13 @@ By default service restart is true.
 Sentinel
 --------
 
-This module supports Redis Sentinel with all the configuration parameters. But some notes you need to be aware:
-
-- It doesn't install Sentinel, the redis-sentinel binary must be already configured
-- It manages redis-sentinel service, but doesn't install the init scripts, they must be already there.
+This module supports Redis Sentinel that comes with Redis 2.8+ with all the configuration parameters. It doesn't install Sentinel, the redis-sentinel binary must be already configured, but it manages upstart scripts (can be deactivated with parameter manage_upstart_scripts = false).
 
 Example:
 
-    class { sentinel:
-      conf_port => '26380',
-      conf_dir => '/mydir',
+    class { redis::sentinel:
+      conf_port      => '26380',
+      conf_dir       => '/mydir',
       sentinel_confs => {
         'mymaster' => {
           'monitor'                 => '127.0.0.1 6379 2',

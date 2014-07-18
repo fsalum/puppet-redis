@@ -11,9 +11,9 @@
 #
 # === Examples
 #
-#  class { sentinel:
-#    conf_port => '26380',
-#    conf_dir => '/mydir',
+#  class { redis::sentinel:
+#    conf_port      => '26380',
+#    conf_dir       => '/mydir',
 #    sentinel_confs => {
 #      'mymaster' => {
 #        'monitor'                 => '127.0.0.1 6379 2',
@@ -40,20 +40,22 @@
 # Copyright 2013 Felipe Salum, unless otherwise noted.
 #
 class redis::sentinel (
-  $conf_port       = '26379',
-  $conf_dir        = '/tmp',
-  $conf_daemonize  = 'yes',
-  $sentinel_confs  = [],
-  $service_enable  = true,
-  $service_ensure  = 'running',
-  $service_restart = true,
+  $conf_port                = '26379',
+  $conf_dir                 = '/tmp',
+  $conf_daemonize           = 'yes',
+  $sentinel_confs           = [],
+  $service_enable           = true,
+  $service_ensure           = 'running',
+  $service_restart          = true,
+  $manage_upstart_scripts   = true,
 ) {
 
   include redis::sentinel_params
 
-  $conf_sentinel     = $redis::sentinel_params::conf
+  $conf_sentinel  = $redis::sentinel_params::conf
   $conf_logrotate = $redis::sentinel_params::conf_logrotate
   $service        = $redis::sentinel_params::service
+  $upstart_script = $redis::sentinel_params::upstart_script
 
   if $conf_pidfile {
     $conf_pidfile_real = $conf_pidfile
@@ -66,14 +68,28 @@ class redis::sentinel (
     $conf_logfile_real = $::redis::sentinel_params::logfile
   }
 
-  service { 'sentinel':
-    ensure     => $service_ensure,
-    name       => $service,
-    enable     => $service_enable,
-    hasrestart => true,
-    hasstatus  => true,
-    require    => [ Exec[$conf_dir],
-                    File[$conf_sentinel] ],
+  if $manage_upstart_scripts == true {
+    service { 'sentinel':
+      ensure     => $service_ensure,
+      name       => $service,
+      enable     => $service_enable,
+      hasrestart => true,
+      hasstatus  => true,
+      require    => [ Exec[$conf_dir],
+                      File[$conf_sentinel],
+                      File[$upstart_script] ],
+      provider   => 'upstart'
+    }
+  } else {
+    service { 'sentinel':
+      ensure     => $service_ensure,
+      name       => $service,
+      enable     => $service_enable,
+      hasrestart => true,
+      hasstatus  => true,
+      require    => [ Exec[$conf_dir],
+                      File[$conf_sentinel] ],
+    }
   }
 
   file { $conf_sentinel:
@@ -117,4 +133,10 @@ class redis::sentinel (
     File[$conf_sentinel] ~> Service['sentinel']
   }
 
+  if $manage_upstart_scripts == true {
+    file { $upstart_script:
+      ensure  => present,
+      content => template('redis/sentinel-init.conf.erb'),
+    }
+  }
 }
