@@ -98,7 +98,8 @@ class redis::sentinel (
     owner   => redis,
     group   => redis,
     mode    => '0644',
-    notify  => Service['sentinel'],
+    notify  => [Service['sentinel'],
+                User['redis'] ],
   }
 
   file { $conf_logrotate:
@@ -124,7 +125,8 @@ class redis::sentinel (
     group   => redis,
     mode    => '0755',
     before  => Service['sentinel'],
-    require => Exec[$conf_dir],
+    require => [ Exec[$conf_dir],
+                 User['redis'] ],
   }
 
   if $service_restart == true {
@@ -138,5 +140,11 @@ class redis::sentinel (
       ensure  => present,
       content => template('redis/sentinel-init.conf.erb'),
     }
+  }
+
+  # Sentinel should be able to work without redis-server
+  # We must assure redis user exists
+  user { 'redis':
+    ensure => present,
   }
 }
