@@ -147,4 +147,20 @@ class redis::sentinel (
   user { 'redis':
     ensure => present,
   }
+
+  file { '/etc/redis':
+    ensure => directory,
+  }
+
+  file { '/var/run/redis':
+    ensure => directory,
+    owner  => redis,
+    group  => redis,
+  }
+
+  file { '/var/log/redis':
+    ensure => directory,
+    owner  => redis,
+    group  => redis,
+  }
 }
