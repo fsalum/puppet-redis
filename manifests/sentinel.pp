@@ -41,7 +41,7 @@
 #
 class redis::sentinel (
   $conf_port                = '26379',
-  $conf_dir                 = '/tmp',
+  $conf_dir                 = '/tmp/redis',
   $conf_daemonize           = 'yes',
   $sentinel_confs           = [],
   $service_enable           = true,
@@ -52,10 +52,11 @@ class redis::sentinel (
 
   include redis::sentinel_params
 
-  $conf_sentinel  = $redis::sentinel_params::conf
-  $conf_logrotate = $redis::sentinel_params::conf_logrotate
-  $service        = $redis::sentinel_params::service
-  $upstart_script = $redis::sentinel_params::upstart_script
+  $conf_sentinel      = $redis::sentinel_params::conf
+  $conf_sentinel_orig = "${conf_sentinel}.puppet"
+  $conf_logrotate     = $redis::sentinel_params::conf_logrotate
+  $service            = $redis::sentinel_params::service
+  $upstart_script     = $redis::sentinel_params::upstart_script
 
   if $conf_pidfile {
     $conf_pidfile_real = $conf_pidfile
@@ -72,11 +73,10 @@ class redis::sentinel (
     service { 'sentinel':
       ensure     => $service_ensure,
       name       => $service,
-      enable     => $service_enable,
       hasrestart => true,
       hasstatus  => true,
       require    => [ Exec[$conf_dir],
-                      File[$conf_sentinel],
+                      File[$conf_sentinel_orig],
                       File[$upstart_script] ],
       provider   => 'upstart'
     }
@@ -88,18 +88,28 @@ class redis::sentinel (
       hasrestart => true,
       hasstatus  => true,
       require    => [ Exec[$conf_dir],
-                      File[$conf_sentinel] ],
+                      File[$conf_sentinel_orig] ],
     }
   }
 
-  file { $conf_sentinel:
-    path    => $conf_sentinel,
+  # Sentinel rewrites the config file so, to avoid overriding it
+  # with the original content everytime puppet runs, this manages the
+  # "notify" event on an original file that triggers a copy to the good one
+  # only if it changed.
+  file { $conf_sentinel_orig:
     content => template('redis/sentinel.conf.erb'),
     owner   => redis,
     group   => redis,
     mode    => '0644',
-    notify  => [Service['sentinel'],
-                User['redis'] ],
+    require => User['redis'],
+    notify  => Exec["cp ${conf_sentinel_orig} ${conf_sentinel}"],
+  }
+
+  exec { "cp ${conf_sentinel_orig} ${conf_sentinel}":
+    refreshonly => true,
+    user        => redis,
+    group       => redis,
+    notify      => Service['sentinel'],
   }
 
   file { $conf_logrotate:
@@ -132,7 +142,7 @@ class redis::sentinel (
   if $service_restart == true {
     # https://github.com/fsalum/puppet-redis/pull/28
     Exec[$conf_dir] ~> Service['sentinel']
-    File[$conf_sentinel] ~> Service['sentinel']
+    File[$conf_sentinel_orig] ~> Service['sentinel']
   }
 
   if $manage_upstart_scripts == true {

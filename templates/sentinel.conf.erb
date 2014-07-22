@@ -32,7 +32,7 @@ logfile <%= @conf_logfile_real %>
  <%- @sentinel_confs.keys.sort.each do |master| -%>
 # Sentinel configuration for <%= master %>
 sentinel monitor <%= master %> <%= @sentinel_confs[master]['monitor'] %>
-<%- @sentinel_confs[master].keys.each do |key| -%>
+<%- @sentinel_confs[master].keys.sort.each do |key| -%>
 <%- if key != 'monitor' -%>
 sentinel <%= key %> <%= master %> <%= @sentinel_confs[master][key] %>
 <%- end -%>
