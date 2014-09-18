@@ -60,6 +60,35 @@ If you need to execute a controlled restart of redis after changes due master/sl
 
 By default service restart is true.
 
+
+Sentinel
+--------
+
+This module supports Redis Sentinel that comes with Redis 2.8+ with all the configuration parameters. It doesn't install Sentinel, the redis-sentinel binary must be already configured, but it manages upstart scripts (can be deactivated with parameter manage_upstart_scripts = false).
+
+Example:
+
+    class { redis::sentinel:
+      conf_port      => '26380',
+      conf_dir       => '/mydir',
+      sentinel_confs => {
+        'mymaster' => {
+          'monitor'                 => '127.0.0.1 6379 2',
+          'down-after-milliseconds' => '60000',
+          'notification-script'     => '/etc/redis/scripts/thescript.py',
+          'parallel-syncs'          => '3',
+        }
+        'resque' => {
+          'monitor'                 => 'resque 6379 4',
+          'down-after-milliseconds' => '10000',
+          'failover-timeout'        => 180000,
+          'notification-script'     => '/etc/redis/scripts/thescript.py',
+          'parallel-syncs'          => '5',
+        }
+      }
+    }
+
+
 Copyright and License
 ---------------------
 
