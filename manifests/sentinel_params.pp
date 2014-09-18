@@ -16,6 +16,7 @@ class redis::sentinel_params {
     'redhat': {
       $servive        = 'redis-sentinel'
       $conf           = '/etc/sentinel.conf'
+      $conf_dir       = undef
       $conf_logrotate = '/etc/logrotate.d/sentinel'
       $pidfile        = '/var/run/redis/sentinel.pid'
       $logfile        = '/var/log/redis/sentinel.log'
@@ -23,6 +24,7 @@ class redis::sentinel_params {
     }
     'debian': {
       $service        = 'redis-sentinel'
+      $conf_dir       = '/etc/redis'
       $conf           = '/etc/redis/sentinel.conf'
       $conf_logrotate = '/etc/logrotate.d/redis-sentinel'
       $pidfile        = '/var/run/redis/redis-sentinel.pid'

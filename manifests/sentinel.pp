@@ -52,6 +52,7 @@ class redis::sentinel (
 
   include redis::sentinel_params
 
+  $main_conf_dir      = $redis::sentinel_params::conf_dir
   $conf_sentinel      = $redis::sentinel_params::conf
   $conf_sentinel_orig = "${conf_sentinel}.puppet"
   $conf_logrotate     = $redis::sentinel_params::conf_logrotate
@@ -105,11 +106,30 @@ class redis::sentinel (
     notify  => Exec["cp ${conf_sentinel_orig} ${conf_sentinel}"],
   }
 
+  if $main_conf_dir != undef {
+    file { $main_conf_dir:
+      ensure => directory,
+      owner   => redis,
+      group   => redis,
+      require => User['redis'],
+    }
+    $require_main_conf_dir = File[$main_conf_dir]
+  } else {
+    $require_main_conf_dir = undef
+  }
+
+  file { $conf_sentinel:
+    owner   => redis,
+    group   => redis,
+    require => $require_main_conf_dir,
+  }
+
   exec { "cp ${conf_sentinel_orig} ${conf_sentinel}":
     refreshonly => true,
     user        => redis,
     group       => redis,
     notify      => Service['sentinel'],
+    require     => [User['redis'], File[$conf_sentinel],],
   }
 
   file { $conf_logrotate:
@@ -156,10 +176,6 @@ class redis::sentinel (
   # We must assure redis user exists
   user { 'redis':
     ensure => present,
-  }
-
-  file { '/etc/redis':
-    ensure => directory,
   }
 
   file { '/var/run/redis':
