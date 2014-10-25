@@ -1,12 +1,10 @@
-Redis Module for Puppet
-=======================
-[![Build Status](https://secure.travis-ci.org/fsalum/puppet-redis.png)](http://travis-ci.org/fsalum/puppet-redis)
+#Redis Module for Puppet
+[![Build Status](https://travis-ci.org/fsalum/puppet-redis.svg?branch=master)](https://travis-ci.org/fsalum/puppet-redis)
 
 This module installs and manages a Redis server. All redis.conf options are
 accepted in the parameterized class.
 
-Important
----------
+##Important
 
 If you are upgrading this module from 0.x to 1.0+, please test it carefully 
 outside production as it is not fully backwards compatible.
@@ -15,14 +13,12 @@ Some class parameters were added, removed or had their default values changed.
 
 The redis.conf template has been completely rewritten to support Redis 2.2+ to 2.8+.
 
-Operating System
-----------------
+##Operating System
 
 Tested on CentOS 6.5, Ubuntu Saucy/Trusty/Precise, Debian 7.4  
 redis.conf options compatible with Redis 2.2, 2.4, 2.6, 2.8  
 
-Quick Start
------------
+##Quick Start
 
 Use the default parameters:
 
@@ -35,8 +31,7 @@ To change the port and listening network interface:
       conf_bind => '0.0.0.0',
     }
 
-Parameters
-----------
+##Parameters
 
 Check the [init.pp](https://github.com/fsalum/puppet-redis/blob/master/manifests/init.pp) file for a complete list of parameters accepted.
 
@@ -60,10 +55,9 @@ If you need to execute a controlled restart of redis after changes due master/sl
 
 By default service restart is true.
 
-Copyright and License
----------------------
+##Copyright and License
 
-Copyright (C) 2012 Felipe Salum
+Copyright (C) 2014 Felipe Salum
 
 Felipe Salum can be contacted at: fsalum@gmail.com
 
