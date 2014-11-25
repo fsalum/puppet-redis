@@ -7,7 +7,7 @@ if ENV['VAGRANT_HOME'].nil?
 end
 
 redis = {
-    :'centos5'  => { :memory => '120', :ip => '10.1.1.10', :box => 'puppetlabs/centos-5.10-64-puppet',  :domain => 'redis.local' },
+    :'centos5'  => { :memory => '120', :ip => '10.1.1.10', :box => 'puppetlabs/centos-5.11-64-puppet',  :domain => 'redis.local' },
     :'centos65' => { :memory => '120', :ip => '10.1.1.11', :box => 'puppetlabs/centos-6.5-64-puppet',   :domain => 'redis.local' },
     :'precise'  => { :memory => '120', :ip => '10.1.1.20', :box => 'puppetlabs/ubuntu-12.04-64-puppet', :domain => 'redis.local' },
     :'saucy'    => { :memory => '120', :ip => '10.1.1.21', :box => 'puppetlabs/ubuntu-13.10-64-puppet', :domain => 'redis.local' },
