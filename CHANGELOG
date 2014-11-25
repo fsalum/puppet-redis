@@ -4,6 +4,11 @@ Release notes for the fsalum-redis module.
 
 ------------------------------------------
 
+#### 1.0.3 - 2014-11-25
+
+* Version lookup not working (#41)
+* Remove from facter warning when redis is not installed #42 (@pmoranga)
+
 #### 1.0.2 - 2014-10-25
 
 * Fixed Travis integration and tests
