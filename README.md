@@ -1,5 +1,5 @@
 #Redis Module for Puppet
-[![Build Status](https://travis-ci.org/fsalum/puppet-redis.svg?branch=master)](https://travis-ci.org/fsalum/puppet-redis)
+[![puppet-redis](https://img.shields.io/puppetforge/v/fsalum/redis.svg)](https://forge.puppetlabs.com/fsalum/redis) [![Build Status](https://travis-ci.org/fsalum/puppet-redis.svg?branch=master)](https://travis-ci.org/fsalum/puppet-redis)
 
 This module installs and manages a Redis server. All redis.conf options are
 accepted in the parameterized class.
