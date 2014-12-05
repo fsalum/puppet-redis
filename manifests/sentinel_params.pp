@@ -14,7 +14,7 @@ class redis::sentinel_params {
 
   case $::osfamily {
     'redhat': {
-      $servive        = 'redis-sentinel'
+      $service        = 'redis-sentinel'
       $conf           = '/etc/sentinel.conf'
       $conf_dir       = undef
       $conf_logrotate = '/etc/logrotate.d/sentinel'
