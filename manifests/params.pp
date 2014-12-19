@@ -16,6 +16,7 @@ class redis::params {
     'redhat': {
       $package        = 'redis'
       $service        = 'redis'
+      $conf_dir       = undef
       $conf           = '/etc/redis.conf'
       $conf_logrotate = '/etc/logrotate.d/redis'
       $pidfile        = '/var/run/redis/redis.pid'
@@ -24,6 +25,7 @@ class redis::params {
     'debian': {
       $package        = 'redis-server'
       $service        = 'redis-server'
+      $conf_dir       = '/etc/redis'
       $conf           = '/etc/redis/redis.conf'
       $conf_logrotate = '/etc/logrotate.d/redis-server'
       $pidfile        = '/var/run/redis/redis-server.pid'
