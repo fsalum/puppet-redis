@@ -1,5 +1,5 @@
 name    'fsalum-redis'
-version '1.0.0'
+version '1.0.3'
 source 'git://github.com/fsalum/puppet-redis.git'
 author 'Felipe Salum'
 license 'Apache License, Version 2.0'
@@ -11,5 +11,3 @@ project_page 'https://github.com/fsalum/puppet-redis'
 
 # https://forge.puppetlabs.com/thias/sysctl
 dependency 'thias/sysctl', '>= 0.3.0'
-# https://forge.puppetlabs.com/puppetlabs/stdlib/
-dependency 'puppetlabs/stdlib', '>= 3.2.1'

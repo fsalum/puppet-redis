@@ -4,6 +4,22 @@ Release notes for the fsalum-redis module.
 
 ------------------------------------------
 
+#### 1.0.3 - 2014-11-25
+
+* Version lookup not working (#41)
+* Remove from facter warning when redis is not installed #42 (@pmoranga)
+
+#### 1.0.2 - 2014-10-25
+
+* Fixed Travis integration and tests
+* Added metadata.json
+* Making it compatible to be 'puppet approved' :)
+
+#### 1.0.1 - 2014-09-16
+
+* Allowing redis package name as a param. #35 (@nprimmer)
+* add $redis_version_override #37 (@tmclaugh)
+
 #### 1.0.0 - 2014-06-08
 
 Many CHANGES to this version, complete rewrite of redis.conf template 

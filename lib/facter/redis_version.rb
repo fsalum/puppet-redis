@@ -1,6 +1,6 @@
 require 'facter'
 
-Facter.add("redis_version", :timeout => 20) do
+Facter.add("redis_version", :timeout => 120) do
     confine :osfamily => "Debian"
 
     setcode do
@@ -12,7 +12,7 @@ Facter.add("redis_version", :timeout => 20) do
 
         redis_version = Facter::Util::Resolution.exec('/usr/bin/redis-server --version')
         if redis_version.nil?
-            redis_version = Facter::Util::Resolution.exec(dpkg+" show redis-server 2> /dev/null | /bin/grep -i 'version:' | /usr/bin/awk '{print $2}'").strip
+            redis_version = Facter::Util::Resolution.exec(dpkg+" show redis-server 2> /dev/null | /bin/grep -i 'version:' | /usr/bin/awk '{printf(\"%s\",$2)}' | sort -nr | head -1")
         end
 
         case redis_version
@@ -35,7 +35,7 @@ Facter.add("redis_version", :timeout => 20) do
     end
 end
 
-Facter.add("redis_version", :timeout => 20) do
+Facter.add("redis_version", :timeout => 120) do
     confine :osfamily => "RedHat"
 
     setcode do
@@ -47,7 +47,7 @@ Facter.add("redis_version", :timeout => 20) do
 
         redis_version = Facter::Util::Resolution.exec('/usr/sbin/redis-server --version')
         if redis_version.nil?
-            redis_version = Facter::Util::Resolution.exec(yum+" info redis 2> /dev/null | /bin/grep '^Version' | /bin/awk -F ':' '{print $2}'").strip
+            redis_version = Facter::Util::Resolution.exec(yum+" info redis 2> /dev/null | /bin/grep '^Version' | /bin/awk -F ':' '{printf(\"%s\",$2)}' | sort -nr | head -1")
         end
 
         case redis_version

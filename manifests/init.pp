@@ -99,6 +99,7 @@ class redis (
   $conf_zset_max_ziplist_value            = '64', # 2.4+
   $package_ensure                         = 'present',
   $package_name                           = undef,
+  $redis_version_override                 = undef,
   $service_enable                         = true,
   $service_ensure                         = 'running',
   $service_restart                        = true,
@@ -109,13 +110,25 @@ class redis (
 
   $conf_redis     = $redis::params::conf
   $conf_logrotate = $redis::params::conf_logrotate
-  if is_string($package_name) {
-    $package     = $package_name
+  $service        = $redis::params::service
+
+  if $redis_version_override {
+    $redis_version_real = $redis_version_override
+  } else {
+    $redis_version_real = $package_ensure ? {
+      /2\.2\..*/ => '2.2.x',
+      /2\.4\..*/ => '2.4.x',
+      /2\.6\..*/ => '2.6.x',
+      /2\.8\..*/ => '2.8.x',
+      default => $::redis_version
+    }
   }
-  else {
+
+  if $package_name {
+    $package     = $package_name
+  }else{
     $package      = $redis::params::package
   }
-  $service        = $redis::params::service
 
   if $conf_pidfile {
     $conf_pidfile_real = $conf_pidfile
