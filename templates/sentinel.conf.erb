@@ -14,15 +14,6 @@ pidfile <%= @conf_pidfile_real %>
 port <%= @conf_port %>
 <%- end -%>
 
-# dir <working-directory>
-# Every long running process should have a well-defined working directory.
-# For Redis Sentinel to chdir to /tmp at startup is the simplest thing
-# for the process to don't interferer with administrative tasks such as
-# unmounting filesystems.
-<%- if @conf_dir -%>
-dir <%= @conf_dir %>
-<%- end -%>
-
 # Specify the log file name. Also 'stdout' can be used to force
 # Redis to log on the standard output. Note that if you use standard
 # output for logging but daemonize, logs will be sent to /dev/null

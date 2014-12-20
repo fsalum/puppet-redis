@@ -12,8 +12,7 @@
 # === Examples
 #
 #  class { redis::sentinel:
-#    conf_port      => '26380',
-#    conf_dir       => '/mydir',
+#    conf_port      => '26379',
 #    sentinel_confs => {
 #      'mymaster' => {
 #        'monitor'                 => '127.0.0.1 6379 2',
@@ -41,23 +40,28 @@
 #
 class redis::sentinel (
   $conf_port                = '26379',
-  $conf_dir                 = '/tmp/redis',
   $conf_daemonize           = 'yes',
   $sentinel_confs           = [],
   $service_enable           = true,
   $service_ensure           = 'running',
   $service_restart          = true,
   $manage_upstart_scripts   = true,
+  $package_name             = undef,
 ) {
 
   include redis::sentinel_params
 
-  $main_conf_dir      = $redis::sentinel_params::conf_dir
   $conf_sentinel      = $redis::sentinel_params::conf
   $conf_sentinel_orig = "${conf_sentinel}.puppet"
   $conf_logrotate     = $redis::sentinel_params::conf_logrotate
   $service            = $redis::sentinel_params::service
   $upstart_script     = $redis::sentinel_params::upstart_script
+
+  if $package_name {
+    $package     = $package_name
+  }else{
+    $package      = $redis::sentinel_params::package
+  }
 
   if $conf_pidfile {
     $conf_pidfile_real = $conf_pidfile
@@ -70,14 +74,18 @@ class redis::sentinel (
     $conf_logfile_real = $::redis::sentinel_params::logfile
   }
 
+  package { 'redis':
+    ensure => $package_ensure,
+    name   => $package,
+  }
+
   if $manage_upstart_scripts == true {
     service { 'sentinel':
       ensure     => $service_ensure,
       name       => $service,
       hasrestart => true,
       hasstatus  => true,
-      require    => [ Exec[$conf_dir],
-                      File[$conf_sentinel_orig],
+      require    => [ File[$conf_sentinel_orig],
                       File[$upstart_script] ],
       provider   => 'upstart'
     }
@@ -88,7 +96,7 @@ class redis::sentinel (
       enable     => $service_enable,
       hasrestart => true,
       hasstatus  => true,
-      require    => [ Exec[$conf_dir],
+      require    => [ Package['redis'],
                       File[$conf_sentinel_orig] ],
     }
   }
@@ -102,34 +110,23 @@ class redis::sentinel (
     owner   => redis,
     group   => redis,
     mode    => '0644',
-    require => User['redis'],
+    require => Package['redis'],
     notify  => Exec["cp ${conf_sentinel_orig} ${conf_sentinel}"],
-  }
-
-  if $main_conf_dir != undef {
-    file { $main_conf_dir:
-      ensure => directory,
-      owner   => redis,
-      group   => redis,
-      require => User['redis'],
-    }
-    $require_main_conf_dir = File[$main_conf_dir]
-  } else {
-    $require_main_conf_dir = undef
   }
 
   file { $conf_sentinel:
     owner   => redis,
     group   => redis,
-    require => $require_main_conf_dir,
+    require => Package['redis'],
   }
 
   exec { "cp ${conf_sentinel_orig} ${conf_sentinel}":
+    path        => '/bin:/usr/bin:/sbin:/usr/sbin',
     refreshonly => true,
     user        => redis,
     group       => redis,
     notify      => Service['sentinel'],
-    require     => [User['redis'], File[$conf_sentinel],],
+    require     => File[$conf_sentinel],
   }
 
   file { $conf_logrotate:
@@ -140,28 +137,8 @@ class redis::sentinel (
     mode    => '0644',
   }
 
-  exec { $conf_dir:
-    path    => '/bin:/usr/bin:/sbin:/usr/sbin',
-    command => "mkdir -p ${conf_dir}",
-    user    => root,
-    group   => root,
-    creates => $conf_dir,
-    before  => Service['sentinel'],
-  }
-
-  file { $conf_dir:
-    ensure  => directory,
-    owner   => redis,
-    group   => redis,
-    mode    => '0755',
-    before  => Service['sentinel'],
-    require => [ Exec[$conf_dir],
-                 User['redis'] ],
-  }
-
   if $service_restart == true {
     # https://github.com/fsalum/puppet-redis/pull/28
-    Exec[$conf_dir] ~> Service['sentinel']
     File[$conf_sentinel_orig] ~> Service['sentinel']
   }
 
@@ -172,21 +149,4 @@ class redis::sentinel (
     }
   }
 
-  # Sentinel should be able to work without redis-server
-  # We must assure redis user exists
-  user { 'redis':
-    ensure => present,
-  }
-
-  file { '/var/run/redis':
-    ensure => directory,
-    owner  => redis,
-    group  => redis,
-  }
-
-  file { '/var/log/redis':
-    ensure => directory,
-    owner  => redis,
-    group  => redis,
-  }
 }
