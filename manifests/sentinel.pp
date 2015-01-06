@@ -41,7 +41,7 @@
 class redis::sentinel (
   $conf_port                = '26379',
   $conf_daemonize           = 'yes',
-  $sentinel_confs           = [],
+  $sentinel_confs           = {},
   $service_enable           = true,
   $service_ensure           = 'running',
   $service_restart          = true,
@@ -107,24 +107,23 @@ class redis::sentinel (
   # only if it changed.
   file { $conf_sentinel_orig:
     content => template('redis/sentinel.conf.erb'),
-    owner   => redis,
-    group   => redis,
+    owner   => root,
+    group   => root,
     mode    => '0644',
     require => Package['redis'],
     notify  => Exec["cp ${conf_sentinel_orig} ${conf_sentinel}"],
   }
 
   file { $conf_sentinel:
-    owner   => redis,
+    owner   => root,
     group   => redis,
+    mode    => '0664',
     require => Package['redis'],
   }
 
   exec { "cp ${conf_sentinel_orig} ${conf_sentinel}":
     path        => '/bin:/usr/bin:/sbin:/usr/sbin',
     refreshonly => true,
-    user        => redis,
-    group       => redis,
     notify      => Service['sentinel'],
     require     => File[$conf_sentinel],
   }
@@ -146,6 +145,7 @@ class redis::sentinel (
     file { $upstart_script:
       ensure  => present,
       content => template('redis/sentinel-init.conf.erb'),
+      mode    => '0755',
     }
   }
 
