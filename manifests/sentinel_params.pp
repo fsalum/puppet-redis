@@ -32,7 +32,7 @@ class redis::sentinel_params {
       $conf_logrotate = '/etc/logrotate.d/redis-sentinel'
       $pidfile        = '/var/run/redis/redis-sentinel.pid'
       $logfile        = '/var/log/redis/redis-sentinel.log'
-      $upstart_script = '/etc/init.d/redis-sentinel'
+      $init_script    = '/etc/init.d/redis-sentinel'
     }
     default: {
       fail("Unsupported osfamily: ${::osfamily}, module ${module_name} only support osfamily RedHat and Debian")

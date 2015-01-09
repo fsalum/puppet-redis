@@ -45,7 +45,7 @@ class redis::sentinel (
   $service_enable           = true,
   $service_ensure           = 'running',
   $service_restart          = true,
-  $manage_upstart_scripts   = true,
+  $manage_init_scripts      = true,
   $package_name             = undef,
 ) {
 
@@ -55,7 +55,7 @@ class redis::sentinel (
   $conf_sentinel_orig = "${conf_sentinel}.puppet"
   $conf_logrotate     = $redis::sentinel_params::conf_logrotate
   $service            = $redis::sentinel_params::service
-  $upstart_script     = $redis::sentinel_params::upstart_script
+  $init_script        = $redis::sentinel_params::init_script
 
   if $package_name {
     $package     = $package_name
@@ -79,15 +79,15 @@ class redis::sentinel (
     name   => $package,
   }
 
-  if $manage_upstart_scripts == true {
+  if $manage_init_scripts == true {
     service { 'sentinel':
       ensure     => $service_ensure,
       name       => $service,
       hasrestart => true,
       hasstatus  => true,
       require    => [ File[$conf_sentinel_orig],
-                      File[$upstart_script] ],
-      provider   => 'upstart'
+                      File[$init_script] ],
+      provider   => 'init'
     }
   } else {
     service { 'sentinel':
@@ -141,8 +141,8 @@ class redis::sentinel (
     File[$conf_sentinel_orig] ~> Service['sentinel']
   }
 
-  if $manage_upstart_scripts == true {
-    file { $upstart_script:
+  if $manage_init_scripts == true {
+    file { $init_script:
       ensure  => present,
       content => template('redis/sentinel-init.conf.erb'),
       mode    => '0755',
