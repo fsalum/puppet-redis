@@ -39,14 +39,14 @@
 # Copyright 2013 Felipe Salum, unless otherwise noted.
 #
 class redis::sentinel (
-  $conf_port                = '26379',
-  $conf_daemonize           = 'yes',
-  $sentinel_confs           = {},
-  $service_enable           = true,
-  $service_ensure           = 'running',
-  $service_restart          = true,
-  $manage_init_scripts      = true,
-  $package_name             = undef,
+  $conf_port           = '26379',
+  $conf_daemonize      = 'yes',
+  $sentinel_confs      = {},
+  $service_enable      = true,
+  $service_ensure      = 'running',
+  $service_restart     = true,
+  $manage_scripts      = true,
+  $package_name        = undef,
 ) {
 
   include redis::sentinel_params
@@ -55,7 +55,8 @@ class redis::sentinel (
   $conf_sentinel_orig = "${conf_sentinel}.puppet"
   $conf_logrotate     = $redis::sentinel_params::conf_logrotate
   $service            = $redis::sentinel_params::service
-  $init_script        = $redis::sentinel_params::init_script
+  $script             = $redis::sentinel_params::script
+  $template           = $redis::sentinel_params::template
 
   if $package_name {
     $package     = $package_name
@@ -79,15 +80,14 @@ class redis::sentinel (
     name   => $package,
   }
 
-  if $manage_init_scripts == true {
+  if $manage_scripts == true {
     service { 'sentinel':
       ensure     => $service_ensure,
       name       => $service,
       hasrestart => true,
       hasstatus  => true,
       require    => [ File[$conf_sentinel_orig],
-                      File[$init_script] ],
-      provider   => 'init'
+                      File[$script] ],
     }
   } else {
     service { 'sentinel':
@@ -141,10 +141,10 @@ class redis::sentinel (
     File[$conf_sentinel_orig] ~> Service['sentinel']
   }
 
-  if $manage_init_scripts == true {
-    file { $init_script:
+  if $manage_scripts == true {
+    file { $script:
       ensure  => present,
-      content => template('redis/sentinel-init.conf.erb'),
+      content => template($template),
       mode    => '0755',
     }
   }
