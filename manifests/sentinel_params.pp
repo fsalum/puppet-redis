@@ -13,17 +13,17 @@
 class redis::sentinel_params {
 
   case $::osfamily {
-    # TODO: add redhat support
-    #'redhat': {
-    #  $package        = 'redis'
-    #  $service        = 'redis-sentinel'
-    #  $conf           = '/etc/sentinel.conf'
-    #  $conf_dir       = undef
-    #  $conf_logrotate = '/etc/logrotate.d/sentinel'
-    #  $pidfile        = '/var/run/redis/sentinel.pid'
-    #  $logfile        = '/var/log/redis/sentinel.log'
-    #  $upstart_script = '/etc/init/redis-sentinel.conf'
-    #}
+    'redhat': {
+      $package        = 'redis'
+      $service        = 'redis-sentinel'
+      $conf           = '/etc/redis-sentinel.conf'
+      $conf_dir       = undef
+      $conf_logrotate = '/etc/logrotate.d/sentinel'
+      $pidfile        = '/var/run/redis/sentinel.pid'
+      $logfile        = '/var/log/redis/sentinel.log'
+      $upstart_script = '/etc/init/redis-sentinel.conf'
+      $manage_upstart_scripts = false
+    }
     'debian': {
       $package        = 'redis-server'
       $service        = 'redis-sentinel'
