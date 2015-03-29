@@ -40,14 +40,14 @@ Facter.add("redis_version", :timeout => 120) do
 
     setcode do
 
-        yum = `which yum 2> /dev/null`.chomp
-        if yum == ''
-            yum = '/usr/bin/yum'
+        rpm = `which rpm 2> /dev/null`.chomp
+        if rpm == ''
+            rpm = '/usr/bin/rpm'
         end
 
         redis_version = Facter::Util::Resolution.exec('/usr/sbin/redis-server --version')
         if redis_version.nil?
-            redis_version = Facter::Util::Resolution.exec(yum+" info redis 2> /dev/null | /bin/grep '^Version' | /bin/awk -F ':' '{printf(\"%s\",$2)}' | sort -nr | head -1")
+            redis_version = Facter::Util::Resolution.exec(rpm+" -q --queryformat '%{version}\\n' redis | grep -v 'not installed' | sort -nr | head -1")
         end
 
         case redis_version
@@ -64,7 +64,7 @@ Facter.add("redis_version", :timeout => 120) do
                 #set version to 2.2
                 redis_version = '2.2.x'
             else
-                redis_version = 'nil'
+                redis_version = nil
         end
         redis_version
   end
