@@ -72,7 +72,7 @@ class redis (
   $conf_repl_ping_slave_period            = '10', # 2.4+
   $conf_repl_timeout                      = '60', # 2.4+
   $conf_requirepass                       = undef,
-  $conf_save                              = {"900" =>"1", "300" => "10", "60" => "10000"},
+  $conf_save                              = {'900' =>'1', '300' => '10', '60' => '10000'},
   $conf_set_max_intset_entries            = '512',
   $conf_slave_priority                    = undef, # 2.6+
   $conf_slave_read_only                   = 'yes', # 2.6+
