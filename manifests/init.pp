@@ -97,6 +97,7 @@ class redis (
   $conf_vm_swap_file                      = '/tmp/redis.swap', # deprecated in 2.4+
   $conf_zset_max_ziplist_entries          = '128', # 2.4+
   $conf_zset_max_ziplist_value            = '64', # 2.4+
+  $conf_rename_command                    = undef, # Ex: {'CONFIG' => 'b840fc02d524045429941cc15f59e41cb7be6c52'},
   $package_ensure                         = 'present',
   $package_name                           = undef,
   $redis_version_override                 = undef,
