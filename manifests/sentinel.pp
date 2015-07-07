@@ -45,9 +45,9 @@ class redis::sentinel (
   $service_enable           = true,
   $service_ensure           = 'running',
   $service_restart          = true,
-  $manage_upstart_scripts   = true,
+  $manage_upstart_scripts   = $redis::sentinel_params::manage_upstart_scripts,
   $package_name             = undef,
-) {
+) inherits redis::sentinel_params {
 
   include redis::sentinel_params
 
@@ -74,9 +74,12 @@ class redis::sentinel (
     $conf_logfile_real = $::redis::sentinel_params::logfile
   }
 
-  package { 'redis':
-    ensure => $package_ensure,
-    name   => $package,
+  unless defined(Package["redis"]) {
+
+    package { 'redis':
+      ensure => $package_ensure,
+      name   => $package,
+    }
   }
 
   if $manage_upstart_scripts == true {
