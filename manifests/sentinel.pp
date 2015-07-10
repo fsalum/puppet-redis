@@ -39,14 +39,14 @@
 # Copyright 2013 Felipe Salum, unless otherwise noted.
 #
 class redis::sentinel (
-  $conf_port                = '26379',
-  $conf_daemonize           = 'yes',
-  $sentinel_confs           = [],
-  $service_enable           = true,
-  $service_ensure           = 'running',
-  $service_restart          = true,
-  $manage_upstart_scripts   = true,
-  $package_name             = undef,
+  $conf_port           = '26379',
+  $conf_daemonize      = 'yes',
+  $sentinel_confs      = {},
+  $service_enable      = true,
+  $service_ensure      = 'running',
+  $service_restart     = true,
+  $manage_scripts      = true,
+  $package_name        = undef,
 ) {
 
   include redis::sentinel_params
@@ -55,7 +55,8 @@ class redis::sentinel (
   $conf_sentinel_orig = "${conf_sentinel}.puppet"
   $conf_logrotate     = $redis::sentinel_params::conf_logrotate
   $service            = $redis::sentinel_params::service
-  $upstart_script     = $redis::sentinel_params::upstart_script
+  $script             = $redis::sentinel_params::script
+  $template           = $redis::sentinel_params::template
 
   if $package_name {
     $package     = $package_name
@@ -79,15 +80,14 @@ class redis::sentinel (
     name   => $package,
   }
 
-  if $manage_upstart_scripts == true {
+  if $manage_scripts == true {
     service { 'sentinel':
       ensure     => $service_ensure,
       name       => $service,
       hasrestart => true,
       hasstatus  => true,
       require    => [ File[$conf_sentinel_orig],
-                      File[$upstart_script] ],
-      provider   => 'upstart'
+                      File[$script] ],
     }
   } else {
     service { 'sentinel':
@@ -107,24 +107,23 @@ class redis::sentinel (
   # only if it changed.
   file { $conf_sentinel_orig:
     content => template('redis/sentinel.conf.erb'),
-    owner   => redis,
-    group   => redis,
+    owner   => root,
+    group   => root,
     mode    => '0644',
     require => Package['redis'],
     notify  => Exec["cp ${conf_sentinel_orig} ${conf_sentinel}"],
   }
 
   file { $conf_sentinel:
-    owner   => redis,
+    owner   => root,
     group   => redis,
+    mode    => '0664',
     require => Package['redis'],
   }
 
   exec { "cp ${conf_sentinel_orig} ${conf_sentinel}":
     path        => '/bin:/usr/bin:/sbin:/usr/sbin',
     refreshonly => true,
-    user        => redis,
-    group       => redis,
     notify      => Service['sentinel'],
     require     => File[$conf_sentinel],
   }
@@ -142,10 +141,11 @@ class redis::sentinel (
     File[$conf_sentinel_orig] ~> Service['sentinel']
   }
 
-  if $manage_upstart_scripts == true {
-    file { $upstart_script:
+  if $manage_scripts == true {
+    file { $script:
       ensure  => present,
-      content => template('redis/sentinel-init.conf.erb'),
+      content => template($template),
+      mode    => '0755',
     }
   }
 
