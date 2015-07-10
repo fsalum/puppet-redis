@@ -13,7 +13,7 @@
 class redis::sentinel_params {
 
   case $::osfamily {
-    'redhat': {
+    'RedHat': {
       $package        = 'redis'
       $service        = 'redis-sentinel'
       $conf           = '/etc/sentinel.conf'
@@ -21,7 +21,7 @@ class redis::sentinel_params {
       $conf_logrotate = '/etc/logrotate.d/sentinel'
       $pidfile        = '/var/run/redis/sentinel.pid'
       $logfile        = '/var/log/redis/sentinel.log'
-      $script = '/etc/init.d/redis-sentinel'
+      $script         = '/etc/init.d/redis-sentinel'
       $template       = 'redis/sentinel-systemd.conf.erb'
     }
     'debian': {
