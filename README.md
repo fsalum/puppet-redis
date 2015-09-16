@@ -1,3 +1,9 @@
+Difference between this fork and the original [puppet-redis](https://github.com/fsalum/puppet-redis):
+
+- Can rename commands with conf_rename_command
+
+---
+
 #Redis Module for Puppet
 [![puppet-redis](https://img.shields.io/puppetforge/v/fsalum/redis.svg)](https://forge.puppetlabs.com/fsalum/redis) [![Build Status](https://travis-ci.org/fsalum/puppet-redis.svg?branch=master)](https://travis-ci.org/fsalum/puppet-redis)
 
