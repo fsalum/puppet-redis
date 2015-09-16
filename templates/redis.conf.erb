@@ -212,6 +212,11 @@ requirepass <%= @conf_requirepass %>
 # an empty string:
 #
 # rename-command CONFIG ""
+<%- if @conf_rename_command -%>
+<%- @conf_rename_command.sort.each do |from, to| -%>
+rename-command <%= from -%> <%= to -%> <%= "\n" -%>
+<%- end -%>
+<%- end -%>
 
 ################################### LIMITS ####################################
 
@@ -801,6 +806,11 @@ requirepass <%= @conf_requirepass %>
 # an empty string:
 #
 # rename-command CONFIG ""
+<%- if @conf_rename_command -%>
+<%- @conf_rename_command.sort.each do |from, to| -%>
+rename-command <%= from -%> <%= to -%> <%= "\n" -%>
+<%- end -%>
+<%- end -%>
 
 ################################### LIMITS ####################################
 
@@ -1520,6 +1530,11 @@ requirepass <%= @conf_requirepass %>
 #
 # Please note that changing the name of commands that are logged into the
 # AOF file or transmitted to slaves may cause problems.
+<%- if @conf_rename_command -%>
+<%- @conf_rename_command.sort.each do |from, to| -%>
+rename-command <%= from -%> <%= to -%> <%= "\n" -%>
+<%- end -%>
+<%- end -%>
 
 ################################### LIMITS ####################################
 
@@ -2349,6 +2364,11 @@ requirepass <%= @conf_requirepass %>
 #
 # Please note that changing the name of commands that are logged into the
 # AOF file or transmitted to slaves may cause problems.
+<%- if @conf_rename_command -%>
+<%- @conf_rename_command.sort.each do |from, to| -%>
+rename-command <%= from -%> <%= to -%> <%= "\n" -%>
+<%- end -%>
+<%- end -%>
 
 ################################### LIMITS ####################################
 
