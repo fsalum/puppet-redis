@@ -165,6 +165,7 @@ class redis (
     group   => root,
     mode    => '0644',
     require => Package['redis'],
+    notify  => Service['redis'],
   }
 
   file { $conf_logrotate:
