@@ -39,6 +39,7 @@
 # Copyright 2013 Felipe Salum, unless otherwise noted.
 #
 class redis::sentinel (
+  $conf_bind                = '0.0.0.0',
   $conf_port                = '26379',
   $conf_daemonize           = 'yes',
   $sentinel_confs           = [],
@@ -47,6 +48,7 @@ class redis::sentinel (
   $service_restart          = true,
   $manage_upstart_scripts   = true,
   $package_name             = undef,
+  $package_ensure           = 'present',
 ) {
 
   include redis::sentinel_params
@@ -123,9 +125,7 @@ class redis::sentinel (
   exec { "cp ${conf_sentinel_orig} ${conf_sentinel}":
     path        => '/bin:/usr/bin:/sbin:/usr/sbin',
     refreshonly => true,
-    user        => redis,
-    group       => redis,
-    notify      => Service['sentinel'],
+    notify     => Service['sentinel'],
     require     => File[$conf_sentinel],
   }
 
