@@ -100,6 +100,7 @@ class redis (
   $package_ensure                         = 'present',
   $package_name                           = undef,
   $redis_version_override                 = undef,
+  $service_name                           = undef,
   $service_enable                         = true,
   $service_ensure                         = 'running',
   $service_restart                        = true,
@@ -110,7 +111,13 @@ class redis (
 
   $conf_redis     = $redis::params::conf
   $conf_logrotate = $redis::params::conf_logrotate
-  $service        = $redis::params::service
+
+  if $service_name {
+    $service = $service_name
+  }else{
+    $service = $redis::params::service
+  }
+
 
   if $redis_version_override {
     $redis_version_real = $redis_version_override
