@@ -124,9 +124,7 @@ class redis::sentinel (
   exec { "cp ${conf_sentinel_orig} ${conf_sentinel}":
     path        => '/bin:/usr/bin:/sbin:/usr/sbin',
     refreshonly => true,
-    user        => redis,
-    group       => redis,
-    notify      => Service['sentinel'],
+    notify     => Service['sentinel'],
     require     => File[$conf_sentinel],
   }
 
