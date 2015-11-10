@@ -39,6 +39,7 @@
 # Copyright 2013 Felipe Salum, unless otherwise noted.
 #
 class redis::sentinel (
+  $conf_bind                = '0.0.0.0',
   $conf_port                = '26379',
   $conf_daemonize           = 'yes',
   $sentinel_confs           = [],

@@ -18,6 +18,7 @@ node default {
   }
 
   class { 'redis::sentinel':
+    conf_bind      => '127.0.0.1',
     conf_port      => '26379',
     sentinel_confs => {
       'mymaster' => {

@@ -14,6 +14,14 @@ pidfile <%= @conf_pidfile_real %>
 port <%= @conf_port %>
 <%- end -%>
 
+# If you want you can bind a single interface, if the bind option is not
+# specified all the interfaces will listen for incoming connections.
+#
+# bind 127.0.0.1
+<%- if @conf_bind -%>
+bind <%= @conf_bind %>
+<%- end -%>
+
 # Specify the log file name. Also 'stdout' can be used to force
 # Redis to log on the standard output. Note that if you use standard
 # output for logging but daemonize, logs will be sent to /dev/null
@@ -134,7 +142,7 @@ sentinel <%= key %> <%= master %> <%= @sentinel_confs[master][key] %>
 # NOTIFICATION SCRIPT
 #
 # sentinel notification-script <master-name> <script-path>
-# 
+#
 # Call the specified notification script for any sentinel event that is
 # generated in the WARNING level (for instance -sdown, -odown, and so forth).
 # This script should notify the system administrator via email, SMS, or any
@@ -158,14 +166,14 @@ sentinel <%= key %> <%= master %> <%= @sentinel_confs[master][key] %>
 # When the master changed because of a failover a script can be called in
 # order to perform application-specific tasks to notify the clients that the
 # configuration has changed and the master is at a different address.
-# 
+#
 # The following arguments are passed to the script:
 #
 # <master-name> <role> <state> <from-ip> <from-port> <to-ip> <to-port>
 #
 # <state> is currently always "failover"
 # <role> is either "leader" or "observer"
-# 
+#
 # The arguments from-ip, from-port, to-ip, to-port are used to communicate
 # the old address of the master and the new address of the elected slave
 # (now a master).
@@ -175,4 +183,3 @@ sentinel <%= key %> <%= master %> <%= @sentinel_confs[master][key] %>
 # Example:
 #
 # sentinel client-reconfig-script mymaster /var/redis/reconfig.sh
-
