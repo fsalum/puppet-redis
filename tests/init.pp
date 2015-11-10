@@ -90,6 +90,7 @@ node default {
     package_ensure                         => 'present',
     service_enable                         => true,
     service_ensure                         => 'running',
+    service_name                           => 'redis-server',
     service_restart                        => true,
     system_sysctl                          => true,
   }
