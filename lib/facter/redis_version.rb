@@ -1,6 +1,6 @@
 require 'facter'
 
-Facter.add("redis_version", :timeout => 120) do
+Facter.add("redis_version") do
     confine :osfamily => "Debian"
 
     setcode do
@@ -35,7 +35,7 @@ Facter.add("redis_version", :timeout => 120) do
     end
 end
 
-Facter.add("redis_version", :timeout => 120) do
+Facter.add("redis_version") do
     confine :osfamily => "RedHat"
 
     setcode do
