@@ -124,6 +124,8 @@ class redis (
     }
   }
 
+  $conf_file_version = regsubst($redis_version_real, '[.]', '-', 'G')
+
   if $package_name {
     $package     = $package_name
   }else{
@@ -160,7 +162,7 @@ class redis (
 
   file { $conf_redis:
     path    => $conf_redis,
-    content => template('redis/redis.conf.erb'),
+    content => template("redis/redis/${conf_file_version}.conf.erb"),
     owner   => root,
     group   => root,
     mode    => '0644',
