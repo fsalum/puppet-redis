@@ -174,6 +174,10 @@ class redis (
     group   => root,
     mode    => '0644',
   }
+  file { '/etc/logrotate.d/redis':
+    path    => '/etc/logrotate.d/redis',
+    ensure  => absent,
+  }
 
   exec { $conf_dir:
     path    => '/bin:/usr/bin:/sbin:/usr/sbin',
